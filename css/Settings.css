@@ -1,0 +1,126 @@
+.settingHeader{
+    /* position: absolute; */
+    /* width: 239px;
+    height: 88px;
+    left: 121px;
+    top: 88px; */
+    padding-top: 150px;
+    left: 30px;
+    /* border-width: 10px; */
+
+    /* font-family: ''; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 45px;
+    line-height: 18px;
+    /* or 40% */
+
+    /* display: flex; */
+    align-self: center;
+    letter-spacing: 1px;
+}
+.settingIcon{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    /* left: 36px;
+    top: 95px; */
+    left: 75px;
+    bottom: 10px;
+
+}
+
+.updatePasswordButton {
+    position: static;
+    width: 300px;
+    height: 62px;
+    left: 30px;
+    top: 60px; 
+
+    /* align-items: flex-end; */
+    background: #7FB4AC;
+    opacity: 0.5;
+    border-radius: 30px;
+}
+.updatePasswordWord {
+    position: absolute;
+    width: 190px;
+    height: 60px;
+    /* border-width: 10px; */
+    left: 100px;
+    top: 25px; 
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    /* or 90% */
+
+    /* display: flex; */
+    /* align-items: center; */
+    align-self: flex-end;
+    letter-spacing: 1px;
+
+    color: #000000;
+}
+.updatePasswordIcon{
+    position: absolute;
+    width: 26px;
+    height: 28px;
+    /* left: 54px;
+    top: 271px; */
+    left: 40px;
+    top: 16px;
+}
+
+
+.themeBox {
+    position: static;
+    width: 300px;
+    height: 62px;
+    left: 30px;
+    top: 100px;
+
+    background: #7FB4AC;
+    opacity: 0.5;
+    border-radius: 30px;
+}
+.themeWord {
+    position: absolute;
+    width: 190px;
+    height: 60px;
+    /* border-width: 10px; */
+    left: 100px;
+    top: 25px; 
+
+    /* font-family: '; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    /* or 90% */
+
+    display: flex;
+    align-self: center;
+    letter-spacing: 1px;
+
+    color: #000000;
+
+}
+.themeImage{
+    position: absolute;
+    width: 37px;
+    height: 37px;
+    /* left: 54px;
+    top: 400px; */
+}
+
+.themeSwitch{
+    position: absolute;
+    /* width: 37px;
+    height: 37px; */
+    /* left: 50px; */
+    /* top: 340px;
+    /* align-self: center; */
+    /* right: 60px; */ 
+}

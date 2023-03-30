@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "types": ["react-native-css-module"]
+  },
+  "extends": "expo/tsconfig.base"
+}
