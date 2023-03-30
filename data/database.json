@@ -4,10 +4,14 @@
       "mallId": "Tiong Bahru Plaza",
       "mallDetails": {
         "Location": {
-          "Latitude": 1.2862842,
-          "Longitude": 103.8277824
+          "latitude": 1.2862842,
+          "longitude": 103.8277824
         },
         "nearestCarpark": "JMB2",
+        "nearestCarparkLocation": {
+          "latitude": 1.2852131,
+          "longitude": 103.8267238
+        },
         "mallImage": "https://cdn.foodadvisor.com.sg/uploads/images/image_big_1945d3f064fe6bc3.jpg"
       },
       "stores": [
@@ -1074,10 +1078,14 @@
       "mallId": "Changi City Point",
       "mallDetails": {
         "Location": {
-          "Latitude": 1.3342732,
-          "Longitude": 103.9627387
+          "latitude": 1.3342732,
+          "longitude": 103.9627387
         },
         "nearestCarpark": "SIM6",
+        "nearestCarparkLocation": {
+          "latitude": 1.3430285,
+          "longitude": 103.9588621
+        },
         "mallImage": "https://untouristsingapore.files.wordpress.com/2013/09/changi-city-point-main-1.jpg"
       },
       "stores": [
@@ -2067,10 +2075,14 @@
       "mallId": "Eastpoint Mall",
       "mallDetails": {
         "Location": {
-          "Latitude": 1.3427145,
-          "Longitude": 103.9530415
+          "latitude": 1.3427145,
+          "longitude": 103.9530415
         },
         "nearestCarpark": "SIM4",
+        "nearestCarparkLocation": {
+          "latitude": 1.3435691,
+          "longitude": 103.9535238
+        },
         "mallImage": "https://static1.straitstimes.com.sg/s3fs-public/styles/large30x20/public/articles/2014/11/26/sjeastpoint261114e_2x.jpg?VersionId=MYb8R6m.CtMKVUaoz5q4uPXhQuQVg1gH"
       },
       "stores": [
@@ -3032,10 +3044,14 @@
       "mallId": "Hougang Mall",
       "mallDetails": {
         "Location": {
-          "Latitude": 1.3725894,
-          "Longitude": 103.8937225
+          "latitude": 1.3725894,
+          "longitude": 103.8937225
         },
         "nearestCarpark": "HG47",
+        "nearestCarparkLocation": {
+          "latitude": 1.3712214,
+          "longitude": 103.8940562
+        },
         "mallImage": "https://www.365credit.com.sg/wp-content/uploads/2022/03/things-to-do-in-hougang.jpg"
       },
       "stores": [
@@ -3997,10 +4013,14 @@
       "mallId": "The Centrepoint",
       "mallDetails": {
         "Location": {
-          "Latitude": 1.3016573,
-          "Longitude": 103.8397629
+          "latitude": 1.3016573,
+          "longitude": 103.8397629
         },
         "nearestCarpark": "BRB1",
+        "nearestCarparkLocation": {
+          "latitude": 1.3061727,
+          "longitude": 103.8506634
+        },
         "mallImage": "https://www.cpresidences.com/wp-content/uploads/2020/09/Decathlon-at-The-Centrepoint.jpeg"
       },
       "stores": [
@@ -4899,10 +4919,14 @@
       "mallId": "Waterway Point",
       "mallDetails": {
         "Location": {
-          "Latitude": 1.4064412,
-          "Longitude": 103.9020846
+          "latitude": 1.4064412,
+          "longitude": 103.9020846
         },
         "nearestCarpark": "PL53",
+        "nearestCarparkLocation": {
+          "latitude": 1.4054404,
+          "longitude": 103.8982429
+        },
         "mallImage": "https://media.propertysupermart.com/media/20190114143107/Waterway-Point-Entrance-1024x683.jpg"
       },
       "stores": [
@@ -6466,10 +6490,14 @@
       "mallId": "White Sands",
       "mallDetails": {
         "Location": {
-          "Latitude": 1.3724166,
-          "Longitude": 103.9496584
+          "latitude": 1.3724166,
+          "longitude": 103.9496584
         },
         "nearestCarpark": "PM21",
+        "nearestCarparkLocation": {
+          "latitude": 1.3712383,
+          "longitude": 103.9494293
+        },
         "mallImage": "https://onecms-res.cloudinary.com/image/upload/s--dGuCVaNq--/f_auto,q_auto/c_fill,g_auto,h_676,w_1200/white-sands-shopping-mall.jpg?itok=Ym7VMOFm"
       },
       "stores": [
