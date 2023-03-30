@@ -6,8 +6,8 @@ import { RecommendationScreen } from "./RecommendationScreen";
 import { CarparkOrMallScreen } from "./CarparkOrMallScreen";
 import { CartScreen } from "./CartScreen";
 import { HistoryScreen } from "./HistoryScreen";
-// import { ResultScreen } from "./ResultScreen";
-// import { MapScreen } from "./MapScreen";
+import { ResultScreen } from "./ResultScreen";
+import { MapScreen } from "./MapScreen";
 export {
   LoginScreen,
   SignupScreen,
@@ -17,6 +17,6 @@ export {
   CarparkOrMallScreen,
   CartScreen,
   HistoryScreen,
-  // ResultScreen,
-  // MapScreen,
+  ResultScreen,
+  MapScreen,
 };

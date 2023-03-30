@@ -13,13 +13,6 @@ import SortByDropdown from "../components/SortByDropDown";
 import ShowLocationPermissionPopup from "../components/ShowLocationPermissionPopup";
 import { MaterialIcons } from "@expo/vector-icons";
 
-// const storesToVisit = [
-//   "4FINGERS Crispy Chicken",
-//   "7 Eleven",
-//   "@At Tea",
-//   "A-One Signature",
-//   "Ajisen",
-// ];
 const getDistance = async (lat1, lng1, lat2, lng2) => {
   const response = await fetch(
     `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${lat1},${lng1}&destinations=${lat2},${lng2}&key=AIzaSyCMDxATNzHSEla0qzZC2BdqwIAST_ouKJ0`
@@ -79,20 +72,6 @@ const findTopMalls = async (sortOption, storesToVisit) => {
     {}
   );
 
-  // const topMalls = Object.entries(mallMatchCount_1)
-  //   .sort(([, count1], [, count2]) => count2 - count1)
-  //   .map(([mallName]) => mallName)
-  //   .slice(0, 5);
-
-  // return sortedMallsByMatchCount.slice(0, 5);
-
-  // const topMalls = mallData.Malls.map((mall) => ({
-  //   mallId: mall.mallId,
-  //   matchedStoreCount: matchedStoresByMall[mall.mallName]?.length || 0,
-  // }))
-  //   .sort((a, b) => b.matchedStoreCount - a.matchedStoreCount)
-  //   .slice(0, 5);
-
   const topMalls = mallData.Malls.map((mall) => ({
     mallId: mall.mallId,
     matchedStoreCount: mallMatchCount_1[mall.mallId] || 0,
@@ -105,14 +84,14 @@ const findTopMalls = async (sortOption, storesToVisit) => {
   if (sortOption === "Distance") {
     const mallsWithDistance = await Promise.all(
       topMalls.map(async (mall) => {
-        const { Latitude, Longitude } = mallData.Malls.find(
+        const { latitude, longitude } = mallData.Malls.find(
           (m) => m.mallId === mall.mallId
         ).mallDetails.Location;
         const distance = await getDistance(
           userLocation.latitude,
           userLocation.longitude,
-          Latitude,
-          Longitude
+          latitude,
+          longitude
         );
         const { nearestCarpark } = mallData.Malls.find(
           (m) => m.mallId === mall.mallId
@@ -133,14 +112,14 @@ const findTopMalls = async (sortOption, storesToVisit) => {
   } else if (sortOption === "Carpark") {
     const mallsWithCarparkAvailability = await Promise.all(
       topMalls.map(async (mall) => {
-        const { Latitude, Longitude } = mallData.Malls.find(
+        const { latitude, longitude } = mallData.Malls.find(
           (m) => m.mallId === mall.mallId
         ).mallDetails.Location;
         const distance = await getDistance(
           userLocation.latitude,
           userLocation.longitude,
-          Latitude,
-          Longitude
+          latitude,
+          longitude
         );
         const { nearestCarpark } = mallData.Malls.find(
           (m) => m.mallId === mall.mallId
@@ -163,12 +142,12 @@ const findTopMalls = async (sortOption, storesToVisit) => {
   } else {
     const mallsWithDistanceAndCarpark = await Promise.all(
       mallData.Malls.map(async (mall) => {
-        const { Latitude, Longitude } = mall.mallDetails.Location;
+        const { latitude, longitude } = mall.mallDetails.Location;
         const distance = await getDistance(
           userLocation.latitude,
           userLocation.longitude,
-          Latitude,
-          Longitude
+          latitude,
+          longitude
         );
         const { nearestCarpark } = mall.mallDetails;
         const carparkAvailability = await getCarparkAvailability(

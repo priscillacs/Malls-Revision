@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useEffect, useCallback } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import { Button, StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import {
@@ -8,28 +8,26 @@ import {
 } from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 // import { useRef } from 'react'; // For google map camera
-// import app from "../app.config.js";
+// import app from '../../app.config.js';
 import newdata from "../data/database.json";
 import DoneButton from "../components/DoneButton";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
 
 function findMallIndex(resultMall) {
-  for (let i = 0; i < newdata.Malls.length; i++) {
-    if (newdata.Malls[i].mallId === resultMall) {
-      return i;
-    }
+  var i;
+  for (i = 0; i < newdata.Malls.length; i++) {
+    if (newdata.Malls[i].mallId === resultMall) break;
   }
-  return -1;
+  return i;
 }
 
-export function MapScreen({ route }) {
+export const MapScreen = ({ route }) => {
   const [currentLocation, setCurrentLocation] = useState({});
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
   const navigation = useNavigation();
   const api_key = Constants.manifest.extra.apiKeyGoogle;
-  console.log(api_key);
   const choice = route.params.choice;
   const resultMall = route.params.resultMall;
   const resultStores = route.params.resultStores;
@@ -77,8 +75,8 @@ export function MapScreen({ route }) {
     console.log("Latitude: ", location.coords.latitude);
     console.log("Longitude", location.coords.longitude);
     setCurrentLocation({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
+      lat: location.coords.latitude,
+      lng: location.coords.longitude,
     });
   }
 
@@ -96,19 +94,17 @@ export function MapScreen({ route }) {
   const mallIndex = findMallIndex(resultMall);
   if (choice === "mall") {
     destination = newdata.Malls[mallIndex].mallDetails.Location;
-    console.log("Mall: " + destination);
   } else {
     destination = newdata.Malls[mallIndex].mallDetails.nearestCarparkLocation;
-    console.log("Carpark: " + destination);
   }
 
   // For Done button to navigate to Result Screen
-  const headerButtonPressHandler = useCallback(() => {
-    navigation.navigate("Result", {
+  function headerButtonPressHandler() {
+    navigation.navigate("ResultScreen", {
       resultMall: resultMall,
       resultStores: resultStores,
     });
-  }, [navigation, resultMall, resultStores]);
+  }
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -138,16 +134,14 @@ export function MapScreen({ route }) {
       />
       <MapViewDirections
         origin={origin}
-        destination={`${destination.latitude},${destination.longitude}`}
+        destination={destination}
         apikey={api_key}
         strokeWidth={6}
         strokeColor={"purple"}
       />
     </MapView>
   );
-}
-
-// export default Map;
+};
 
 const styles = StyleSheet.create({
   map: {
