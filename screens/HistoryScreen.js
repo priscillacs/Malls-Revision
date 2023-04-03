@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 import { FlatList, View } from "react-native";
 import { HistoryInfoCard } from "../components/HistoryInfoCard";
 import { Spacer } from "../components/Spacer";
-import { SafeArea } from "../components/SafeArea";
 import { HistoryDropdown } from "../components/HistoryDropdown";
 import { db } from "../config/firebase";
 import { ref, onValue } from "firebase/database";
@@ -31,7 +30,6 @@ export const HistoryScreen = () => {
   }
 
   return (
-    <SafeArea>
       <View style={{ backgroundColor: "#E7F4F2" }}>
         <Spacer position="top" size="large" />
         <DropdownAlignment>
@@ -44,7 +42,7 @@ export const HistoryScreen = () => {
           <FlatList
             data={sortedData}
             renderItem={({ item }) => (
-              <Spacer position="bottom" size="large">
+              <Spacer position="bottom" size="xlarge">
                 <HistoryInfoCard history={item} />
               </Spacer>
             )}
@@ -53,7 +51,6 @@ export const HistoryScreen = () => {
           />
         </Spacer>
       </View>
-    </SafeArea>
   );
 };
 

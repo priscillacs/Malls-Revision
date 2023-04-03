@@ -1,7 +1,6 @@
 import styled from "styled-components/native";
 
 const defaultTextStyles = `
-  font-family: LeagueSpartan_300Light;
   font-weight: 400;
   color: #E7F4F2;
   flex-wrap: wrap;
@@ -11,6 +10,7 @@ const defaultTextStyles = `
 
 const body = `
     font-size: 20px;
+    
 `;
 
 const hint = `
@@ -22,19 +22,18 @@ const error = `
 `;
 
 const caption = `
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
 `;
 
 const subcaption = `
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
 `;
 
 const label = `
-    font-family: VastShadow_400Regular;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 22px;
+    font-weight: 700;
 `;
 
 export const Text = styled.Text`

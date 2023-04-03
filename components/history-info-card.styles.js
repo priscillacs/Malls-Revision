@@ -28,10 +28,9 @@ export const Info = styled.View`
 `;
 
 export const Stores = styled.Text`
-  font-family: LeagueSpartan_300Light;
   font-size: 18px;
   color: #C9E8E3;
-  padding-top: 4px;
+  padding-top: 2px;
   position: relative;
   z-index: 1;
 `;

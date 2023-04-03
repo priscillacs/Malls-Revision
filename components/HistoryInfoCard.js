@@ -32,8 +32,8 @@ export const HistoryInfoCard = ({ history = {} }) => {
     <HistoryCard elevation={5}>
       <HistoryCardCover key={mall} source={{ uri: photo }} />
       <Info>
-        <Text style={{ marginBottom: 5 }}> {date} </Text>
-        <Text>{mall}</Text>
+        <Text variant="subcaption" style={{ marginBottom: 5 }}> {date} </Text>
+        <Text style={{ textTransform: 'uppercase' }}  variant="label">{mall}</Text>
         <Section>
           <Spacer>
             {stores.map((store) => {
@@ -41,9 +41,9 @@ export const HistoryInfoCard = ({ history = {} }) => {
             })}
           </Spacer>
           <SectionEnd>
-            <Spacer>
+            <Spacer position="top" size="large">
               <TouchableOpacity onPress={() => {}}>
-                <Text style={styles.underline}>Go Again</Text>
+                <Text variant="caption" style={styles.underline}>Go Again</Text>
               </TouchableOpacity>
             </Spacer>
           </SectionEnd>
