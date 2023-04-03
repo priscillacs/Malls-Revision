@@ -17,11 +17,13 @@ const positionVariant = {
   bottom: "marginBottom",
 };
 
+const space = ["0px", "4px", "8px", "16px", "32px", "64px"];
+
 //$ makes it a string
-const getVariant = (position, size, theme) => {
+const getVariant = (position, size) => {
   const sizeIndex = sizeVariant[size];
   const property = positionVariant[position];
-  const value = theme.space[sizeIndex];
+  const value = space[sizeIndex];
 
   return `${property}:${value}`;
 };

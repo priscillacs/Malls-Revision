@@ -9,29 +9,29 @@ export const Icon = styled.Image`
 `;
 
 export const HistoryCard = styled(Card)`
-  background-color: ${(props) => props.theme.colors.ui.tertiary};
+  background-color: #7FB4AC;
   position: relative;
   z-index: 1;
 `;
 
 export const HistoryCardCover = styled(Card.Cover)`
-  padding: ${(props) => props.theme.space[3]};
-  background-color: ${(props) => props.theme.colors.ui.tertiary};
+  padding: 16px;
+  background-color: #7FB4AC;
   position: relative;
   z-index: 1;
 `;
 
 export const Info = styled.View`
-  padding: ${(props) => props.theme.space[3]};
+  padding: 16px;
   position: relative;
   z-index: 1;
 `;
 
 export const Stores = styled.Text`
-  font-family: ${(props) => props.theme.fonts.body};
-  font-size: ${(props) => props.theme.fontSizes.caption};
-  color: ${(props) => props.theme.colors.ui.secondary};
-  padding-top: ${(props) => props.theme.space[1]};
+  font-family: LeagueSpartan_300Light;
+  font-size: 18px;
+  color: #C9E8E3;
+  padding-top: 4px;
   position: relative;
   z-index: 1;
 `;
@@ -42,7 +42,7 @@ export const Section = styled.View`
 `;
 
 export const SectionEnd = styled.View`
-  padding-top: ${(props) => props.theme.space[4]};
+  padding-top: 32px;
   flex: 1;
   flex-direction: row;
   justify-content: flex-end;
