@@ -21,7 +21,7 @@ export const AppStack = () => {
       />
       <Stack.Screen name="CarparkOrMall" component={CarparkOrMallScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
-      {/* <Stack.Screen name="Result" component={ResultScreen} /> */}
+      <Stack.Screen name="Result" component={ResultScreen} />
     </Stack.Navigator>
   );
 };
