@@ -4,8 +4,7 @@ import {
   Text,
   StyleSheet,
   View,
-  Image,
-  Button,
+  ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
@@ -13,7 +12,9 @@ import SearchBar from "../components/SearchBar";
 import { Picker } from "@react-native-picker/picker";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { setGlobalState, useGlobalState } from "../hooks/Global";
-import data from "../data/stores.json";
+import { Ionicons } from '@expo/vector-icons'; 
+import storeData from "../data/stores.json";
+import mallData from "../data/database.json";
 // import { useTheme } from "../contexts/ThemeProvider";
 
 export const HomeScreen = () => {
@@ -30,9 +31,9 @@ export const HomeScreen = () => {
   }, []);
 
   const getStores = () => {
-    setCategorisedData(data);
-    setFilteredData(data);
-    setMasterData(data);
+    setCategorisedData(storeData);
+    setFilteredData(storeData);
+    setMasterData(storeData);
   };
 
   const searchFilter = (text) => {
@@ -79,10 +80,16 @@ export const HomeScreen = () => {
               : null;
           }}
         >
-          <Image
+          <ImageBackground
             style={styles.image}
             source={{ uri: `${item.storeDetails.image}` }}
-          />
+          >
+            {cart.indexOf(item) > -1 ? (
+            <View style={{ flexDirection: "row", justifyContent: "flex-end" }} >
+              <Ionicons name="checkmark-circle" size={24} color="#7fb4ac"/>
+            </View> 
+            ) : null }
+          </ImageBackground>
         </TouchableHighlight>
         <Text style={[styles.text]}>{item.storeName.toUpperCase()}</Text>
       </View>
@@ -93,9 +100,6 @@ export const HomeScreen = () => {
     return <View style={{ height: 0 }} />;
   };
   const navigation = useNavigation();
-  const mallrec = () => {
-    navigation.navigate("Cart");
-  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -103,11 +107,10 @@ export const HomeScreen = () => {
         style={[
           // styles.container,
           // { backgroundColor: theme.backgroundColor },
-          { flex: 1 },
+          { flex: 1, paddingBottom: 50 },
         ]}
       >
         <SearchBar term={term} onTermChange={(term) => searchFilter(term)} />
-        <Button title="next" onPress={mallrec} />
         <Picker
           selectedValue={category}
           onValueChange={(itemValue) => sortCategory(itemValue)}
