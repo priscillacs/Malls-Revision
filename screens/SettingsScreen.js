@@ -1,6 +1,6 @@
 import { update } from "firebase/database";
 import React, { useContext, useState } from "react";
-import { Button, StyleSheet, Text, View, Switch } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View, Modal, Button } from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
@@ -9,55 +9,103 @@ import { auth } from "../config/firebase";
 export const SettingsScreen = ({ navigation }) => {
   // to use hook
   const { theme, updateTheme } = useTheme();
-
   const changeTheme = () => updateTheme(theme.themeMode);
-
-  const [isEnabled, setIsEnabled] = useState(
-    theme === "default" ? false : true
-  );
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const updatePassword = () => {
-    navigation.navigate("UpdatePassword");
-  };
+  const [modalVisible, setModalVisible] = useState(false);
   const handleLogout = () => {
     signOut(auth).catch((error) => console.log("Error logging out: ", error));
   };
+
   return (
-    <View
-      style={[styles.container, { backgroundColor: theme.backgroundColor }]}
-    >
-      <Text style={[styles.text, { color: theme.textColor }]}>Settings</Text>
-      <Button
-        title="change theme"
-        onPress={changeTheme}
-        color={theme.nav.backgroundColor}
-      />
-      <Button title="Sign Out" onPress={handleLogout} />
-      {/* <Switch 
-        value = {isEnabled}
-        onChange={handleOnChange}
-        trackColor={{false:'#767577', true:'#81b0ff'}}
-        thumbColor={theme==='default'? '#f5dd4b':'#f4f3f4'}
-        ios_backgroundColor='#3e3e3e'
-        
-      /> */}
-      <Button
-        title="Update Password"
-        onPress={updatePassword}
-        color={theme.nav.backgroundColor}
-      />
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.title, { color: theme.text.primary }]}>Settings</Text>
+      <View>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: theme.ui.tertiary }]}
+          onPress={changeTheme}>
+          <Text style={[styles.text, { color: theme.text.secondary }]}>Change Theme</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: theme.ui.tertiary }]}
+          onPress={() => navigation.navigate('UpdatePassword')}>
+          <Text style={[styles.text, { color: theme.text.secondary }]}>Update Password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: theme.ui.tertiary }]}
+          onPress={() => setModalVisible(true)}>
+          <Text style={[styles.text, { color: theme.text.secondary }]}>Log Out</Text>
+        </TouchableOpacity>
+      </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <View style={[styles.modalContainer]}>
+          <View style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}>
+            <Text style={[styles.text, { color: theme.text.secondary }]}>Are you sure?</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+                style={[styles.modalButton]}
+                onPress={handleLogout}>
+                <Text style={[styles.text, { color: theme.text.error }]}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton]}
+                onPress={() => setModalVisible(false)}>
+                <Text style={[styles.text, { color: theme.text.secondary }]}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    padding: 90
   },
   text: {
-    fontSize: 40,
-    fontWeight: "bold",
-    padding: 90,
+    fontSize: 20,
+    fontWeight: 'bold',
+    alignContent: 'center'
   },
+  button: {
+    padding: 20,
+    paddingHorizontal: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 35,
+    margin: 15,
+  },
+  modal: {
+    borderRadius: 25,
+    padding: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '62%',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+  },
+  modalButton: {
+    flex: 1,
+    paddingHorizontal: 10,
+    margin: 8,
+    marginTop: 12,
+  }
 });
