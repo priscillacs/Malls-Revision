@@ -10,7 +10,6 @@ const defaultTextStyles = `
 
 const body = `
     font-size: 20px;
-    
 `;
 
 const hint = `
@@ -22,7 +21,7 @@ const error = `
 `;
 
 const caption = `
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
 `;
 
@@ -61,28 +60,3 @@ export const Text = styled.Text`
 Text.defaultProps = {
   variant: "body",
 };
-
-// //declared on top
-// const variants = {
-//     body,
-//     label,
-//     caption,
-//     subcaption,
-//     error,
-//     hint,
-//   };
-
-// //export Text that takes the Text component that styled-components have exported
-// //has 2 dynamic properties
-// //second line is destructuring on LHS
-// //if a text doesn't have a variant at all, it will allocate defaultTextStyles
-// //in [variant], it will take one of the variants, eg. "label"
-// export const Text = styled.Text`
-//   ${({ theme }) => defaultTextStyles(theme)}
-//   ${({ variant, theme }) => variants[variant](theme)}
-// `;
-
-// //will run body by default
-// Text.defaultProps = {
-//   variant: "body",
-// };

@@ -30,27 +30,27 @@ export const HistoryScreen = () => {
   }
 
   return (
-      <View style={{ backgroundColor: "#E7F4F2" }}>
-        <Spacer position="top" size="large" />
-        <DropdownAlignment>
-          <HistoryDropdown
-            sortOption={sortOption}
-            setSortOption={setSortOption}
-          />
-        </DropdownAlignment>
-        <Spacer position="" size="large">
-          <FlatList
-            data={sortedData}
-            renderItem={({ item }) => (
-              <Spacer position="bottom" size="xlarge">
-                <HistoryInfoCard history={item} />
-              </Spacer>
-            )}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{ padding: 20 }}
-          />
-        </Spacer>
-      </View>
+    <View style={{ backgroundColor: "#E7F4F2" }}>
+      <Spacer position="top" size="large" />
+      <DropdownAlignment>
+        <HistoryDropdown
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+        />
+      </DropdownAlignment>
+      <Spacer position="" size="large">
+        <FlatList
+          data={sortedData}
+          renderItem={({ item }) => (
+            <Spacer position="bottom" size="xlarge">
+              <HistoryInfoCard history={item} />
+            </Spacer>
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ padding: 20, paddingBottom: 180 }}
+        />
+      </Spacer>
+    </View>
   );
 };
 
@@ -59,4 +59,5 @@ const DropdownAlignment = styled.View`
   flex-direction: row;
   justify-content: flex-end;
   z-index: 1;
+  background-color: transparent;
 `;
