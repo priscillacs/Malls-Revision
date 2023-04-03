@@ -65,7 +65,6 @@ export const CartScreen = () => {
           >
             Clear Cart
           </Text>
-          {/* <Button title="next" onPress={mallrec} /> */}
         </TouchableOpacity>
       </View>
 
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
     borderRadius: 40 / 2,
-    // marginRight: 300,
+    marginTop: 5,
     marginBottom: 100,
     // padding: 50,
   },
