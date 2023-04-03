@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { Spacer } from "../components/Spacer";
-import { Text } from "../components/Text";
+import { Text } from "../components/TextComponent";
 
 const styles = StyleSheet.create({
   bold: { fontWeight: "bold" },
