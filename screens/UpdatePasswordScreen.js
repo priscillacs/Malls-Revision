@@ -11,16 +11,15 @@ export const UpdatePasswordScreen = () => {
     >
       <Text style={[styles.text, { color: theme.textColor }]}>Update</Text>
       <Text style={[styles.text, { color: theme.textColor }]}>Password</Text>
+      <Text>Enter Current Password</Text>
       <View style={[style.box, { backgroundColor: theme.textColor }]}>
         <TouchableOpacity
-          style={[
-            style.confirmButton,
-            { backgroundColor: theme.backgroundColor },
-          ]}
-        >
-          <Text style={[style.confirm, { color: theme.textColor }]}>
-            Confirm
-          </Text>
+        onPress={false}>
+          <Text>Confirm</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => navigation.goBack()}>
+          <Text>Cancel</Text>
         </TouchableOpacity>
       </View>
     </View>
