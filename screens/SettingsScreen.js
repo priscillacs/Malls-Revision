@@ -1,10 +1,9 @@
 import { update } from "firebase/database";
-import React, { useContext, useState } from "react";
-import { TouchableOpacity, StyleSheet, Text, View, Modal, Button } from "react-native";
+import React, { useState } from "react";
+import { TouchableOpacity, StyleSheet, Text, View, Modal } from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
-// import UpdatePassword from "./UpdatePasswordScreen";
 
 export const SettingsScreen = ({ navigation }) => {
   // to use hook
@@ -55,7 +54,7 @@ export const SettingsScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={[styles.modalButton]}
                 onPress={() => setModalVisible(false)}>
-                <Text style={[styles.text, { color: theme.text.secondary }]}>Close</Text>
+                <Text style={[styles.text, { color: theme.text.secondary }]}>Cancel</Text>
               </TouchableOpacity>
             </View>
           </View>

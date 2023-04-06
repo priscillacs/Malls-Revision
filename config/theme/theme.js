@@ -26,12 +26,13 @@ export const defaultTheme = {
   },
   text: {
     primary: "#436661",
+    secondary: "#E6FFFB",
     disabled: "#9C9C9C",
     inverse: "#",
     error: "#D0421B",
     success: "#138000",
   },
-};
+}
 
 export const darkTheme = {
   backgroundColor: "#202124",
@@ -65,4 +66,4 @@ export const darkTheme = {
     error: "#D0421B",
     success: "#138000",
   },
-};
+}
