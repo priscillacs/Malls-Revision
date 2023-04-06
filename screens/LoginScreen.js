@@ -155,8 +155,10 @@ const styles = StyleSheet.create({
   bottomcontainer: {
     flex: 1,
     backgroundColor: "#436661",
+    paddingTop: 30,
     paddingLeft: 30,
     paddingRight: 30,
+    paddingBottom: 75,
   },
   logoContainer: {
     alignItems: "center",

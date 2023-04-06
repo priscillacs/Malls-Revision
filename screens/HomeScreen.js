@@ -107,7 +107,7 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, marginTop: 50 }}>
       <View style={[styles.container, { backgroundColor: theme.background }]}>
         <View style={styles.imageContainer}>
           <Image
@@ -216,11 +216,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#d9d9d9",
     marginLeft: 20,
     marginTop: 40,
-    marginRight: 170,
-    borderRadius: 10,
+    // marginRight: 170,
+    width: "50%",
+    height: 30,
+    // borderRadius: 10,
+    marginBottom: 20,
   },
   container: {
-    paddingTop: 50,
+    paddingTop: 30,
     flex: 1,
   },
   imageContainer: {

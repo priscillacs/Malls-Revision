@@ -38,7 +38,12 @@ export const HistoryScreen = () => {
   }
 
   return (
-    <SafeAreaView style={[{ flex: 1 }, { backgroundColor: theme.background }]}>
+    <SafeAreaView
+      style={[
+        { flex: 1, marginTop: 50 },
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.header}>
         <Text style={[styles.titleText, { color: theme.text.primary }]}>
           History
@@ -77,11 +82,11 @@ const DropdownAlignment = styled.View`
 `;
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
+    paddingTop: 30,
   },
   titleText: {
     // flex: 1,
-    marginTop: 50,
+    marginTop: 30,
     fontSize: 30,
     fontWeight: "bold",
     marginLeft: 20,

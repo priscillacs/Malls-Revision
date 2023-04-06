@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { db } from "../config/firebase";
 import { ref, set, onValue } from "firebase/database";
 
+import { useTheme } from "../contexts/ThemeProvider";
 import newdata from "../data/database.json";
 
 const StoreItem = ({ storeName, imageUrl, unitNumber, contact }) => (
@@ -110,6 +111,7 @@ export function ResultScreen({ route }) {
   }
   const DATA = dummy;
 
+  const { theme } = useTheme();
   function buttonPressHandler() {
     console.log("Button is pressed! First time");
     addNewHistoryData(toDoData, mallImage, resultMall, resultStores);
@@ -140,23 +142,48 @@ export function ResultScreen({ route }) {
             onPress={toggleIsSubmitted}
           />
         </View> */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Back</Text>
-      </View>
-      <FlatList
-        data={DATA}
-        renderItem={renderStoreItem}
-        // keyExtractor={(item) => item.id}
-      />
-      <View>
-        <Button
-          style={styles.button}
-          title="DONE"
-          onPress={toggleIsSubmitted}
+
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={styles.back}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialIcons
+              name="arrow-back"
+              size={24}
+              style={{ color: theme.text.primary }}
+            />
+          </TouchableOpacity>
+          {/* <Text style={styles.headerText}>Back</Text> */}
+        </View>
+        <View style={styles.header}>
+          <Text style={[styles.titleText, { color: theme.text.primary }]}>
+            Matched Stores
+          </Text>
+        </View>
+        <FlatList
+          data={DATA}
+          renderItem={renderStoreItem}
+          // keyExtractor={(item) => item.id}
         />
+        {/* <View>
+          <Button
+            style={styles.button}
+            title="DONE"
+            onPress={toggleIsSubmitted}
+          />
+        </View> */}
+
+        <TouchableOpacity style={styles.button} onPress={toggleIsSubmitted}>
+          <Text
+            style={{
+              margin: 10,
+              fontSize: 16,
+              alignSelf: "center",
+              color: "white",
+            }}
+          >
+            Done
+          </Text>
+        </TouchableOpacity>
       </View>
     </>
   );
@@ -167,7 +194,16 @@ export function ResultScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    marginTop: 50,
+    paddingTop: 30,
+    // marginLeft: 10,
+  },
+  back: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 1,
+    marginLeft: 20,
+    // padding: 10,
   },
   storeItem: {
     flex: 1,
@@ -198,9 +234,20 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 10,
   },
+  // header: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   justifyContent: "flex-start",
+  //   backgroundColor: "#fff",
+  //   paddingHorizontal: 10,
+  //   paddingTop: 40,
+  //   paddingBottom: 10,
+  //   marginTop: 10,
+  // },
   headerText: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    // fontWeight: "bold",
     marginLeft: 10,
   },
   title: {
@@ -213,5 +260,26 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingTop: 16,
+  },
+  header: {
+    flexDirection: "row",
+    marginTop: 25,
+    alignContent: "center",
+    paddingLeft: 30,
+    marginBottom: 8,
+  },
+  titleText: {
+    flex: 1,
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  button: {
+    alignSelf: "center",
+    backgroundColor: "#436661",
+    height: 40,
+    width: 250,
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });

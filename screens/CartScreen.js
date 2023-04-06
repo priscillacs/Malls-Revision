@@ -43,7 +43,12 @@ export const CartScreen = () => {
     );
   };
   return (
-    <SafeAreaView style={[{ flex: 1 }, { backgroundColor: theme.background }]}>
+    <SafeAreaView
+      style={[
+        { flex: 1, marginTop: 50 },
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.header}>
         <Text style={[styles.titleText, { color: theme.text.primary }]}>
           Cart
@@ -150,7 +155,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     padding: 10,
-    marginTop: 70,
+    marginTop: 30,
   },
   subHeader: {
     flexDirection: "row",

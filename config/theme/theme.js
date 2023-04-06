@@ -32,7 +32,7 @@ export const defaultTheme = {
     error: "#D0421B",
     success: "#138000",
   },
-  entypo: {
+  button: {
     primary: "black",
   },
 };
@@ -70,7 +70,7 @@ export const darkTheme = {
     error: "#D0421B",
     success: "#138000",
   },
-  entypo: {
+  button: {
     primary: "white",
   },
 };

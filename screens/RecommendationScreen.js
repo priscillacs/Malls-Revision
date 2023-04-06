@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import SortByDropdown from "../components/SortByDropDown";
 import ShowLocationPermissionPopup from "../components/ShowLocationPermissionPopup";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useTheme } from "../contexts/ThemeProvider";
 
 const getDistance = async (lat1, lng1, lat2, lng2) => {
   const response = await fetch(
@@ -200,6 +201,7 @@ export const RecommendationScreen = ({ route }) => {
     }
   };
 
+  const { theme } = useTheme();
   const isExpanded = (mallName) => expandedMalls.includes(mallName);
 
   const navigation = useNavigation();
@@ -214,19 +216,28 @@ export const RecommendationScreen = ({ route }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#e6fffb" }}>
-      <View style={styles.container}>
+    <SafeAreaView style={[{ flex: 1 }]}>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
         <View style={styles.back}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color="black" />
+            <MaterialIcons
+              name="arrow-back"
+              size={24}
+              style={{ color: theme.text.primary }}
+              // color="white"
+            />
             {/* <Text style={styles.backText}> Back </Text> */}
           </TouchableOpacity>
         </View>
         <View style={styles.header}>
-          <Text style={styles.titleText}>Results</Text>
+          <Text style={[styles.titleText, { color: theme.text.primary }]}>
+            Results
+          </Text>
         </View>
         <View style={styles.subHeader}>
-          <Text style={styles.titleMatch}>Best Matches:</Text>
+          <Text style={[styles.titleMatch, { color: theme.text.primary }]}>
+            Best Matches:
+          </Text>
           <SortByDropdown
             sortOption={sortOption}
             setSortOption={setSortOption}
@@ -325,6 +336,9 @@ const styles = StyleSheet.create({
   container: {
     flext: 1,
     paddingTop: 30,
+    marginTop: 50,
+    paddingTop: 20,
+    paddingBottom: 180,
   },
   back: {
     flexDirection: "row",
