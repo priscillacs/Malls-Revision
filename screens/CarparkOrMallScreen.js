@@ -36,6 +36,7 @@ export function CarparkOrMallScreen({ route }) {
           <Text style={styles.backText}> Back </Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.carparkOrMallContainer}>
         <View style={styles.optionContainer}>
           <Button title="Carpark" onPress={carparkChoiceHandler} />
