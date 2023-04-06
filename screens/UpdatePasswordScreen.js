@@ -1,19 +1,31 @@
 import React, { useState } from "react";
-import { TextInput, View, StyleSheet, Text, TouchableOpacity, Modal, Alert } from "react-native";
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Alert,
+} from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 import style from "../css/UpdatePassword.css";
-import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import {
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 import { auth } from "../config/firebase";
 import firebase from "firebase/app";
 import "firebase/auth";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {signupValidationSchema} from '../utils/update'
+import { signupValidationSchema } from "../utils/update";
 
 export const UpdatePasswordScreen = ({ navigation }) => {
   const { theme } = useTheme();
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [nPModalVisible, setModalVisible] = useState(false);
 
   const handleOPPress = () => {
@@ -21,54 +33,66 @@ export const UpdatePasswordScreen = ({ navigation }) => {
     reauthenticateWithCredential(auth.currentUser, cred)
       .then(() => {
         // User successfully reauthenticated.
-        setModalVisible(true)
+        setModalVisible(true);
       })
-      .catch(error => {
-        Alert.alert('Wrong Password.');
+      .catch((error) => {
+        Alert.alert("Wrong Password.");
       });
   };
 
   const handleNPPress = (values) => {
-    const {new_pw, re_new_pw} = values;
+    const { new_pw, re_new_pw } = values;
     updatePassword(auth.currentUser, new_pw)
-    .then(() => {
-      // User successfully reauthenticated.
-      Alert.alert('Password changed successfully.');
-      navigation.goBack();
-    })
-    .catch(error => {
-      Alert.alert('Please try again later.');
-    });
+      .then(() => {
+        // User successfully reauthenticated.
+        Alert.alert("Password changed successfully.");
+        navigation.goBack();
+      })
+      .catch((error) => {
+        Alert.alert("Please try again later.");
+      });
   };
 
   return (
-    <Formik initialValues={{
-      new_pw:'',
-      re_new_pw: ''
-    }} 
-    validationSchema={signupValidationSchema}
-    onSubmit={values => handleNPPress(values)}
+    <Formik
+      initialValues={{
+        new_pw: "",
+        re_new_pw: "",
+      }}
+      validationSchema={signupValidationSchema}
+      onSubmit={(values) => handleNPPress(values)}
     >
-      {({values, errors, touched, handleChange, setFieldTouched, handleSubmit, isValid}) =>(
-
-
-      <View style={[
-        styles.container,
-        { backgroundColor: theme.backgroundColor }]}
-      >
-        <Text style={[styles.text, { color: theme.textColor }]}>Update Password</Text>
-        <View style={[style.box, { backgroundColor: theme.textColor, justifyContent: 'center' }]}>
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        setFieldTouched,
+        handleSubmit,
+        isValid,
+      }) => (
+        <View
+          style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+        >
+          <Text style={[styles.text, { color: theme.textColor }]}>
+            Update Password
+          </Text>
+          <View
+            style={[
+              style.box,
+              { backgroundColor: theme.textColor, justifyContent: "center" },
+            ]}
+          >
             <TextInput
               style={{ height: 40 }}
               placeholder="Enter Current Password"
-              onChangeText={newText => setText(newText)}
+              onChangeText={(newText) => setText(newText)}
               defaultValue={text}
-              autoCapitalize = {false}
+              autoCapitalize={false}
             />
 
             <View>
-              <TouchableOpacity
-                onPress={handleOPPress}>
+              <TouchableOpacity onPress={handleOPPress}>
                 <Text>Confirm</Text>
               </TouchableOpacity>
             </View>
@@ -79,49 +103,59 @@ export const UpdatePasswordScreen = ({ navigation }) => {
                 setModalVisible(false);
               }}
             >
-              <View style={[
-                styles.container,
-                { backgroundColor: theme.backgroundColor }]}
+              <View
+                style={[
+                  styles.container,
+                  { backgroundColor: theme.backgroundColor },
+                ]}
               >
-                <Text style={[styles.text, { color: theme.textColor }]}>New Password</Text>
+                <Text style={[styles.text, { color: theme.textColor }]}>
+                  New Password
+                </Text>
                 <TextInput
                   style={{ height: 40 }}
                   placeholder="Enter New Password"
-                  onChangeText={handleChange('new_pw')}
-                  value = {values.new_pw}
+                  onChangeText={handleChange("new_pw")}
+                  value={values.new_pw}
                   // defaultValue={''}
-                  autoCapitalize = {false}
-                  onBlur={() => setFieldTouched('new_pw')}
+                  autoCapitalize={false}
+                  onBlur={() => setFieldTouched("new_pw")}
                 />
                 {touched.new_pw && errors.new_pw && (
-              <Text style = {{color: 'red'}}>{errors.new_pw}</Text>
+                  <Text style={{ color: "red" }}>{errors.new_pw}</Text>
                 )}
 
                 <TextInput
                   style={{ color: theme.updatePasswordText, height: 40 }}
                   placeholder="Confirm New Password"
-                  onChangeText={handleChange('re_new_pw')}
+                  onChangeText={handleChange("re_new_pw")}
                   // defaultValue={''}
-                  value = {values.re_new_pw}  
-                  autoCapitalize = {false}
-                  onBlur={() => setFieldTouched('re_new_pw')}
+                  value={values.re_new_pw}
+                  autoCapitalize={false}
+                  onBlur={() => setFieldTouched("re_new_pw")}
                 />
                 {touched.re_new_pw && errors.re_new_pw && (
-              <Text style = {{color: 'red'}} >{errors.re_new_pw}</Text>
-              )}
+                  <Text style={{ color: "red" }}>{errors.re_new_pw}</Text>
+                )}
 
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: "row" }}>
                   <TouchableOpacity
                     onPress={handleSubmit}
                     style={[
                       style.confirmButton,
-                      { backgroundColor: isValid? theme.backgroundColor:'#FFFFFF'},
+                      {
+                        backgroundColor: isValid
+                          ? theme.backgroundColor
+                          : "#FFFFFF",
+                      },
                     ]}
-                    disabled = {!isValid}>
+                    disabled={!isValid}
+                  >
                     <Text>Confirm</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('SettingsOption')}>
+                    onPress={() => navigation.navigate("SettingsOption")}
+                  >
                     <Text>Cancel</Text>
                   </TouchableOpacity>
                 </View>
@@ -129,10 +163,8 @@ export const UpdatePasswordScreen = ({ navigation }) => {
             </Modal>
           </View>
         </View>
-
       )}
-      </Formik>
-  
+    </Formik>
   );
 };
 

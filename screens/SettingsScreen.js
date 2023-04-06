@@ -1,12 +1,14 @@
 import { update } from "firebase/database";
 import React, { useContext, useState } from "react";
 import {
-  TouchableOpacity,
+  Button,
   StyleSheet,
   Text,
   View,
+  Switch,
+  TouchableOpacity,
   Modal,
-  Button,
+  Image,
 } from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 import { signOut } from "firebase/auth";
@@ -17,38 +19,96 @@ import { auth } from "../config/firebase";
 export const SettingsScreen = ({ navigation }) => {
   // to use hook
   const { theme, updateTheme } = useTheme();
+
   const changeTheme = () => updateTheme(theme.themeMode);
+
   const [modalVisible, setModalVisible] = useState(false);
+
+  // const [isEnabled, setIsEnabled] = useState(
+  //   theme === "default" ? false : true
+  // );
+
   const handleLogout = () => {
     signOut(auth).catch((error) => console.log("Error logging out: ", error));
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.text.primary }]}>
-        Settings
-      </Text>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Image
+          source={require("../assets/images/settings_Cog.png")}
+          style={{ width: 50, height: 50, marginRight: 10, marginTop: 40 }}
+        />
+        <Text style={[styles.title, { color: theme.text.primary }]}>
+          Settings
+        </Text>
+      </View>
       <View>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.ui.tertiary }]}
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
           onPress={changeTheme}
         >
+          <Image
+            source={require("../assets/images/settings_ThemeKey.png")}
+            style={{
+              width: 30,
+              height: 30,
+              flexDirection: "column",
+              alignSelf: "flex-start",
+              marginRight: 30,
+            }}
+          />
           <Text style={[styles.text, { color: theme.text.secondary }]}>
             Change Theme
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.ui.tertiary }]}
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
           onPress={() => navigation.navigate("UpdatePassword")}
         >
+          <Image
+            source={require("../assets/images/settings_UpdatePW.png")}
+            style={{
+              width: 30,
+              height: 30,
+              flexDirection: "column",
+              alignSelf: "flex-start",
+              marginRight: 30,
+            }}
+          />
           <Text style={[styles.text, { color: theme.text.secondary }]}>
             Update Password
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.ui.tertiary }]}
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
           onPress={() => setModalVisible(true)}
         >
+          {/* <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{flexDirection: 'column', alignSelf:'flex-start'}}/>  */}
           <Text style={[styles.text, { color: theme.text.secondary }]}>
             Log Out
           </Text>
@@ -106,13 +166,8 @@ const styles = StyleSheet.create({
     paddingTop: 90,
     paddingBottom: 50,
   },
-  title: {
-    fontSize: 40,
-    fontWeight: "bold",
-    padding: 90,
-  },
   text: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "bold",
     alignContent: "center",
   },
