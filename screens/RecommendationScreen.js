@@ -219,7 +219,7 @@ export const RecommendationScreen = ({ route }) => {
         <View style={styles.back}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcons name="arrow-back" size={24} color="black" />
-            <Text style={styles.backText}> Back </Text>
+            {/* <Text style={styles.backText}> Back </Text> */}
           </TouchableOpacity>
         </View>
         <View style={styles.header}>
@@ -335,23 +335,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
   },
-  // back: {
-  //   position: "absolute",
-  //   top: 40,
-  //   left: 0,
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   padding: 10,
-  // },
-  // backButton: {
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   marginBottom: 10,
-  // },
-  // backText: {
-  //   fontSize: 18,
-  //   marginLeft: 5,
-  // },
+  back: {
+    padding: 10,
+  },
   header: {
     flexDirection: "row",
     padding: 10,

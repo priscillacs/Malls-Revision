@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
-import { FlatList, View } from "react-native";
+import { FlatList, View, StyleSheet, Text, SafeAreaView } from "react-native";
 import { HistoryInfoCard } from "../components/HistoryInfoCard";
 import { Spacer } from "../components/Spacer";
-import { SafeArea } from "../components/SafeArea";
 import { HistoryDropdown } from "../components/HistoryDropdown";
 import { db } from "../config/firebase";
 import { ref, onValue } from "firebase/database";
-
+import { useTheme } from "../contexts/ThemeProvider";
 export const HistoryScreen = () => {
   const [toDoData, setToDoData] = useState([]);
-
+  const { theme, updateTheme } = useTheme();
   useEffect(() => {
     const pastHistoryData = ref(db, "historyData");
     onValue(pastHistoryData, (snapshot) => {
@@ -31,29 +30,32 @@ export const HistoryScreen = () => {
   }
 
   return (
-    <SafeArea>
-      <View style={{ backgroundColor: "#E7F4F2" }}>
-        <Spacer position="top" size="large" />
-        <DropdownAlignment>
-          <HistoryDropdown
-            sortOption={sortOption}
-            setSortOption={setSortOption}
-          />
-        </DropdownAlignment>
-        <Spacer position="" size="large">
-          <FlatList
-            data={sortedData}
-            renderItem={({ item }) => (
-              <Spacer position="bottom" size="large">
-                <HistoryInfoCard history={item} />
-              </Spacer>
-            )}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{ padding: 20 }}
-          />
-        </Spacer>
+    <SafeAreaView style={[{ flex: 1 }, { backgroundColor: theme.background }]}>
+      <View style={styles.header}>
+        <Text style={[styles.titleText, { color: theme.text.primary }]}>
+          History
+        </Text>
       </View>
-    </SafeArea>
+      <Spacer position="top" size="large" />
+      <DropdownAlignment>
+        <HistoryDropdown
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+        />
+      </DropdownAlignment>
+      <Spacer position="" size="large">
+        <FlatList
+          data={sortedData}
+          renderItem={({ item }) => (
+            <Spacer position="bottom" size="xlarge">
+              <HistoryInfoCard history={item} />
+            </Spacer>
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ padding: 20, paddingBottom: 180 }}
+        />
+      </Spacer>
+    </SafeAreaView>
   );
 };
 
@@ -62,4 +64,17 @@ const DropdownAlignment = styled.View`
   flex-direction: row;
   justify-content: flex-end;
   z-index: 1;
+  background-color: transparent;
 `;
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 50,
+  },
+  titleText: {
+    // flex: 1,
+    marginTop: 50,
+    fontSize: 30,
+    fontWeight: "bold",
+    marginLeft: 20,
+  },
+});

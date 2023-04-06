@@ -26,10 +26,14 @@ export const defaultTheme = {
   },
   text: {
     primary: "#436661",
+    secondary: "#E6FFFB",
     disabled: "#9C9C9C",
     inverse: "#",
     error: "#D0421B",
     success: "#138000",
+  },
+  entypo: {
+    primary: "black",
   },
 };
 
@@ -60,9 +64,13 @@ export const darkTheme = {
   },
   text: {
     primary: "#E7F4F2",
+    secondary: "#202124",
     disabled: "#9C9C9C",
     inverse: "#FFFFFF",
     error: "#D0421B",
     success: "#138000",
+  },
+  entypo: {
+    primary: "white",
   },
 };
