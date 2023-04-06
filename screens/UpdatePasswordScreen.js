@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Modal,
   Alert,
+  Image,
+  Pressable
 } from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 import style from "../css/UpdatePassword.css";
