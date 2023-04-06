@@ -7,10 +7,13 @@ import { auth } from "../config/firebase";
 import firebase from "firebase/app";
 import "firebase/auth";
 
+import { Formik } from "formik";
+import * as Yup from "yup";
+import {signupValidationSchema} from '../utils/update'
+
 export const UpdatePasswordScreen = ({ navigation }) => {
   const { theme } = useTheme();
   const [text, setText] = useState('');
-  const [cfmText, setCfmText] = useState('')
   const [nPModalVisible, setModalVisible] = useState(false);
 
   const handleOPPress = () => {
@@ -25,73 +28,111 @@ export const UpdatePasswordScreen = ({ navigation }) => {
       });
   };
 
-  const handleNPPress = () => {
-    if (text === cfmText) {
-      updatePassword(auth.currentUser, cfmText)
-      .catch(error => {
-        Alert.alert('Password Too Short')
-      })
-    } else {
-      Alert.alert('Password Did Not Match. Try Again.')
-    }
+  const handleNPPress = (values) => {
+    const {new_pw, re_new_pw} = values;
+    updatePassword(auth.currentUser, new_pw)
+    .then(() => {
+      // User successfully reauthenticated.
+      Alert.alert('Password changed successfully.');
+      navigation.goBack();
+    })
+    .catch(error => {
+      Alert.alert('Please try again later.');
+    });
   };
 
   return (
-    <View style={[
-      styles.container,
-      { backgroundColor: theme.backgroundColor }]}
+    <Formik initialValues={{
+      new_pw:'',
+      re_new_pw: ''
+    }} 
+    validationSchema={signupValidationSchema}
+    onSubmit={values => handleNPPress(values)}
     >
-      <Text style={[styles.text, { color: theme.textColor }]}>Update Password</Text>
-      <TextInput
-        style={{ height: 40 }}
-        placeholder="Enter Current Password"
-        onChangeText={newText => setText(newText)}
-        defaultValue={text}
-      />
+      {({values, errors, touched, handleChange, setFieldTouched, handleSubmit, isValid}) =>(
 
-      <View>
-        <TouchableOpacity
-          onPress={handleOPPress}>
-          <Text>Confirm</Text>
-        </TouchableOpacity>
-      </View>
-      <Modal
-        animationType="slide"
-        visible={nPModalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
+
+      <View style={[
+        styles.container,
+        { backgroundColor: theme.backgroundColor }]}
       >
-        <View style={[
-          styles.container,
-          { backgroundColor: theme.backgroundColor }]}
-        >
-          <Text style={[styles.text, { color: theme.textColor }]}>New Password</Text>
-          <TextInput
-            style={{ height: 40 }}
-            placeholder="Enter New Password"
-            onChangeText={newText => setText(newText)}
-            defaultValue={''}
-          />
-          <TextInput
-            style={{ height: 40 }}
-            placeholder="Confirm New Password"
-            onChangeText={newText => setCfmText(newText)}
-            defaultValue={''}
-          />
-          <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity
-              onPress={handleNPPress}>
-              <Text>Confirm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('SettingsOption')}>
-              <Text>Cancel</Text>
-            </TouchableOpacity>
+        <Text style={[styles.text, { color: theme.textColor }]}>Update Password</Text>
+        <View style={[style.box, { backgroundColor: theme.textColor, justifyContent: 'center' }]}>
+            <TextInput
+              style={{ height: 40 }}
+              placeholder="Enter Current Password"
+              onChangeText={newText => setText(newText)}
+              defaultValue={text}
+              autoCapitalize = {false}
+            />
+
+            <View>
+              <TouchableOpacity
+                onPress={handleOPPress}>
+                <Text>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+            <Modal
+              animationType="slide"
+              visible={nPModalVisible}
+              onRequestClose={() => {
+                setModalVisible(false);
+              }}
+            >
+              <View style={[
+                styles.container,
+                { backgroundColor: theme.backgroundColor }]}
+              >
+                <Text style={[styles.text, { color: theme.textColor }]}>New Password</Text>
+                <TextInput
+                  style={{ height: 40 }}
+                  placeholder="Enter New Password"
+                  onChangeText={handleChange('new_pw')}
+                  value = {values.new_pw}
+                  // defaultValue={''}
+                  autoCapitalize = {false}
+                  onBlur={() => setFieldTouched('new_pw')}
+                />
+                {touched.new_pw && errors.new_pw && (
+              <Text style = {{color: 'red'}}>{errors.new_pw}</Text>
+                )}
+
+                <TextInput
+                  style={{ color: theme.updatePasswordText, height: 40 }}
+                  placeholder="Confirm New Password"
+                  onChangeText={handleChange('re_new_pw')}
+                  // defaultValue={''}
+                  value = {values.re_new_pw}  
+                  autoCapitalize = {false}
+                  onBlur={() => setFieldTouched('re_new_pw')}
+                />
+                {touched.re_new_pw && errors.re_new_pw && (
+              <Text style = {{color: 'red'}} >{errors.re_new_pw}</Text>
+              )}
+
+                <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    onPress={handleSubmit}
+                    style={[
+                      style.confirmButton,
+                      { backgroundColor: isValid? theme.backgroundColor:'#FFFFFF'},
+                    ]}
+                    disabled = {!isValid}>
+                    <Text>Confirm</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('SettingsOption')}>
+                    <Text>Cancel</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
           </View>
         </View>
-      </Modal>
-    </View>
+
+      )}
+      </Formik>
+  
   );
 };
 
