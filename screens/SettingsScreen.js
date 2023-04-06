@@ -5,6 +5,9 @@ import { useTheme } from "../contexts/ThemeProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 
+//logo
+import {Ionicons} from '@expo/vector-icons'
+
 // import UpdatePassword from "./UpdatePasswordScreen";
 
 export const SettingsScreen = ({ navigation }) => {
@@ -27,24 +30,24 @@ export const SettingsScreen = ({ navigation }) => {
   return (
     <View style={[styles.container, { backgroundColor: theme.background}]}>
       <View style = {{flexDirection:'row', alignItems:'center'}}>
-        <Image source={require('../assets/images/settings_Cog.png')} style = {{width: 50, height: 50, marginRight:10, marginTop:40}}/> 
+        <Ionicons name="settings-sharp" size={50} color={theme.text.primary} style = {{marginRight:10, marginTop:40}} />
         <Text style={[styles.title, { color: theme.text.primary }]}>Settings</Text>
       </View>
       <View>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: theme.ui.tertiary, flexDirection:'row', justifyContent:'center', alignItems:'center'  }]}
           onPress={changeTheme}>
-          <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{width: 30, height: 30, flexDirection: 'column', alignSelf:'flex-start', marginRight:30}}/> 
+          <Ionicons name="color-palette" size={30} color={theme.quaternary} style = {{flexDirection: 'column', alignSelf:'flex-start', marginRight:40}} />
           <Text style={[styles.text, { color: theme.text.secondary }]}>Change Theme</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: theme.ui.tertiary, flexDirection:'row', justifyContent:'center', alignItems:'center' }]}
           onPress={() => navigation.navigate('UpdatePassword')}>
-          <Image source={require('../assets/images/settings_UpdatePW.png')} style = {{width: 30, height: 30, flexDirection: 'column', alignSelf:'flex-start', marginRight:30}}/> 
+          <Ionicons name="md-key" size={30} color={theme.quaternary} style = {{flexDirection: 'column', alignSelf:'flex-start', marginRight:30}}/>
           <Text style={[styles.text, { color: theme.text.secondary }]}>Update Password</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.ui.tertiary, flexDirection:'row', justifyContent:'center', alignItems:'center' }]}
+          style={[styles.button, { backgroundColor: theme.ui.quaternary, flexDirection:'row', justifyContent:'center', alignItems:'center' }]}
           onPress={() => setModalVisible(true)}>
           {/* <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{flexDirection: 'column', alignSelf:'flex-start'}}/>  */}
           <Text style={[styles.text, { color: theme.text.secondary }]}>Log Out</Text>

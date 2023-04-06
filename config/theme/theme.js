@@ -23,6 +23,8 @@ export const defaultTheme = {
     disabled: "#DEDEDE",
     error: "#D0421B",
     success: "#138000",
+    input: "#cccccc",
+    inputBox: "#8c8c8c"
   },
   text: {
     primary: "#436661",
@@ -58,6 +60,8 @@ export const darkTheme = {
     disabled: "#DEDEDE",
     error: "#D0421B",
     success: "#138000",
+    input: "#e8e8e8",
+    inputBox: "#8c8c8c"
   },
   text: {
     primary: "#E7F4F2",
