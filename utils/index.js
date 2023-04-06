@@ -29,7 +29,7 @@ export const loginValidationSchema = Yup.object().shape({
     .required()
     .matches(
       passwordRegex,
-      "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one number."
+      "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one number with minimum 8 characters."
     )
     .label("Password"),
 });
@@ -40,7 +40,7 @@ export const signupValidationSchema = Yup.object().shape({
     .required()
     .matches(
       passwordRegex,
-      "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one number."
+      "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one number with minimum 8 characters."
     )
     .label("Password"),
   confirmPassword: Yup.string()

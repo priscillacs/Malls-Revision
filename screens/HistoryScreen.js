@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
-import { FlatList, View } from "react-native";
+import { FlatList, View, StyleSheet, Text, SafeAreaView } from "react-native";
 import { HistoryInfoCard } from "../components/HistoryInfoCard";
 import { Spacer } from "../components/Spacer";
 import { HistoryDropdown } from "../components/HistoryDropdown";
 import { db } from "../config/firebase";
 import { ref, onValue } from "firebase/database";
-
+import { useTheme } from "../contexts/ThemeProvider";
 export const HistoryScreen = () => {
   const [toDoData, setToDoData] = useState([]);
-
+  const { theme, updateTheme } = useTheme();
   useEffect(() => {
     const pastHistoryData = ref(db, "historyData");
     onValue(pastHistoryData, (snapshot) => {
@@ -38,7 +38,12 @@ export const HistoryScreen = () => {
   }
 
   return (
-    <View style={{ backgroundColor: "#E7F4F2" }}>
+    <SafeAreaView style={[{ flex: 1 }, { backgroundColor: theme.background }]}>
+      <View style={styles.header}>
+        <Text style={[styles.titleText, { color: theme.text.primary }]}>
+          History
+        </Text>
+      </View>
       <Spacer position="top" size="large" />
       <DropdownAlignment>
         <HistoryDropdown
@@ -58,7 +63,7 @@ export const HistoryScreen = () => {
           contentContainerStyle={{ padding: 20, paddingBottom: 180 }}
         />
       </Spacer>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -68,4 +73,17 @@ const DropdownAlignment = styled.View`
   justify-content: flex-end;
   z-index: 1;
   background-color: transparent;
+  background-color: transparent;
 `;
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 50,
+  },
+  titleText: {
+    // flex: 1,
+    marginTop: 50,
+    fontSize: 30,
+    fontWeight: "bold",
+    marginLeft: 20,
+  },
+});
