@@ -22,9 +22,17 @@ export const HistoryScreen = () => {
   let sortedData = [...toDoData];
 
   if (sortOption === "Most Recent") {
-    sortedData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    sortedData.sort(
+      (a, b) =>
+        new Date(b.date.replace(/-/g, "/")) -
+        new Date(a.date.replace(/-/g, "/"))
+    );
   } else if (sortOption === "Least Recent") {
-    sortedData.sort((a, b) => new Date(a.date) - new Date(b.date));
+    sortedData.sort(
+      (a, b) =>
+        new Date(a.date.replace(/-/g, "/")) -
+        new Date(b.date.replace(/-/g, "/"))
+    );
   } else if (sortOption === "A-Z") {
     sortedData.sort((a, b) => a.mall.localeCompare(b.mall));
   }
