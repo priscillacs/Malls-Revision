@@ -5,23 +5,25 @@ import { FlatList } from "react-native";
 import { setGlobalState, useGlobalState } from "../hooks/Global";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-// import { useTheme } from "../contexts/ThemeProvider";
+import { useTheme } from "../contexts/ThemeProvider";
 export const CartScreen = () => {
   const [cart] = useGlobalState("cart");
-  // const { theme } = useTheme();
+  const { theme } = useTheme();
   const navigation = useNavigation();
   const mallrec = () => {
     navigation.navigate("MallRecommendation");
   };
   const ItemView = ({ item }) => {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: theme.ui.tertiary }]}>
         <Image
           style={styles.image}
           source={{ uri: `${item.storeDetails.image}` }}
         />
-        <View style={{ flex: 1, flexDirection: "row", alignSelf: "center" }}>
-          <Text style={styles.text}>{item.storeName}</Text>
+        <View style={[{ flex: 1, flexDirection: "row", alignSelf: "center" }]}>
+          <Text style={[styles.text, { color: theme.text.secondary }]}>
+            {item.storeName}
+          </Text>
         </View>
         <TouchableOpacity
           onPress={() => {
@@ -31,7 +33,7 @@ export const CartScreen = () => {
           }}
         >
           <Entypo
-            style={{ marginTop: 20, marginRight: 10 }}
+            style={[{ marginTop: 20, marginRight: 10 }]}
             name="circle-with-cross"
             size={24}
             color="black"
@@ -40,14 +42,22 @@ export const CartScreen = () => {
       </View>
     );
   };
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={[
+        { flex: 1, marginTop: 50 },
+        { backgroundColor: theme.background },
+      ]}
+    >
       <View style={styles.header}>
-        <Text style={styles.titleText}>Results</Text>
+        <Text style={[styles.titleText, { color: theme.text.primary }]}>
+          Cart
+        </Text>
       </View>
       <View style={styles.subHeader}>
-        <Text style={styles.titleMatch}>Best Matches:</Text>
+        <Text style={[styles.titleMatch, { color: theme.text.primary }]}>
+          Store List:
+        </Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -55,13 +65,15 @@ export const CartScreen = () => {
           }}
         >
           <Text
-            style={{
-              textAlign: "center",
-              margin: 10,
-              fontSize: 18,
-              color: "#588D85",
-              textDecorationLine: "underline",
-            }}
+            style={[
+              {
+                textAlign: "center",
+                margin: 10,
+                fontSize: 18,
+                textDecorationLine: "underline",
+              },
+              { color: theme.text.primary },
+            ]}
           >
             Clear Cart
           </Text>
@@ -69,21 +81,12 @@ export const CartScreen = () => {
       </View>
 
       {Object.keys(cart).length > 0 ? (
-        <View style={{ flex: 1 }}>
+        <View style={[{ flex: 1 }]}>
           <FlatList
             data={cart}
             keyExtractor={(item, index) => index.toString()}
             renderItem={ItemView}
           />
-          {/* <TouchableOpacity
-            style={styles.go}
-            onPress={() => {
-              navigation.navigate("MallRecommendation", {
-                storesToVisit: cart.map(({ storeName }) => storeName),
-                console.log(storesToVisit)
-              });
-            }}
-          > */}
           <TouchableOpacity
             style={styles.go}
             onPress={() => {
@@ -105,7 +108,12 @@ export const CartScreen = () => {
           </TouchableOpacity>
         </View>
       ) : (
-        <Text style={{ fontSize: 16, alignSelf: "center", marginTop: 200 }}>
+        <Text
+          style={[
+            { fontSize: 16, alignSelf: "center", marginTop: 200 },
+            { color: theme.text.primary },
+          ]}
+        >
           Store Cart is Empty!!
         </Text>
       )}
@@ -119,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#7fb4ac",
     justifyContent: "space-between",
     borderRadius: 150 / 2,
-    margin: 5,
+    margin: 10,
   },
   image: {
     alignSelf: "flex-start",
@@ -147,6 +155,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     padding: 10,
+    marginTop: 30,
   },
   subHeader: {
     flexDirection: "row",
@@ -157,13 +166,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     marginLeft: 10,
-    color: "#436661",
+    // color: "#436661",
   },
   titleMatch: {
     flex: 1,
     fontSize: 20,
     fontWeight: "bold",
-    color: "#436661",
+    // color: "#436661",
     marginLeft: 10,
     marginTop: 10,
   },

@@ -1,8 +1,8 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { Spacer } from "../components/Spacer";
-import { Text } from "../components/Text";
-
+import { Text } from "../components/TextComponent";
+import { useNavigation } from "@react-navigation/native";
 const styles = StyleSheet.create({
   bold: { fontWeight: "bold" },
   italic: { fontStyle: "italic" },
@@ -28,6 +28,14 @@ export const HistoryInfoCard = ({ history = {} }) => {
     stores = ["Store A", "Store B", "Store C"],
   } = history;
 
+  const navigation = useNavigation();
+
+  const onPressGoAgain = () => {
+    navigation.navigate("CarparkOrMall", {
+      resultMall: mall,
+      resultStores: stores,
+    });
+  };
   return (
     <HistoryCard elevation={5}>
       <HistoryCardCover key={mall} source={{ uri: photo }} />
@@ -36,7 +44,9 @@ export const HistoryInfoCard = ({ history = {} }) => {
           {" "}
           {date}{" "}
         </Text>
-        <Text variant="label">{mall}</Text>
+        <Text style={{ textTransform: "uppercase" }} variant="label">
+          {mall}
+        </Text>
         <Section>
           <Spacer>
             {stores.map((store) => {
@@ -44,8 +54,8 @@ export const HistoryInfoCard = ({ history = {} }) => {
             })}
           </Spacer>
           <SectionEnd>
-            <Spacer>
-              <TouchableOpacity onPress={() => {}}>
+            <Spacer position="top" size="large">
+              <TouchableOpacity onPress={onPressGoAgain}>
                 <Text variant="caption" style={styles.underline}>
                   Go Again
                 </Text>

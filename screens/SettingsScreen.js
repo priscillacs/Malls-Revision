@@ -1,6 +1,15 @@
 import { update } from "firebase/database";
 import React, { useContext, useState } from "react";
-import { Button, StyleSheet, Text, View, Switch, TouchableOpacity, Modal, Image } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Switch,
+  TouchableOpacity,
+  Modal,
+  Image,
+} from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
@@ -26,31 +35,86 @@ export const SettingsScreen = ({ navigation }) => {
     signOut(auth).catch((error) => console.log("Error logging out: ", error));
   };
 
-
   return (
-    <View style={[styles.container, { backgroundColor: theme.background}]}>
-      <View style = {{flexDirection:'row', alignItems:'center'}}>
-        <Ionicons name="settings-sharp" size={50} color={theme.text.primary} style = {{marginRight:10, marginTop:40}} />
-        <Text style={[styles.title, { color: theme.text.primary }]}>Settings</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Image
+          source={require("../assets/images/settings_Cog.png")}
+          style={{ width: 50, height: 50, marginRight: 10, marginTop: 40 }}
+        />
+        <Text style={[styles.title, { color: theme.text.primary }]}>
+          Settings
+        </Text>
       </View>
       <View>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.ui.tertiary, flexDirection:'row', justifyContent:'center', alignItems:'center'  }]}
-          onPress={changeTheme}>
-          <Ionicons name="color-palette" size={30} color={theme.quaternary} style = {{flexDirection: 'column', alignSelf:'flex-start', marginRight:40}} />
-          <Text style={[styles.text, { color: theme.text.secondary }]}>Change Theme</Text>
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+          onPress={changeTheme}
+        >
+          <Image
+            source={require("../assets/images/settings_ThemeKey.png")}
+            style={{
+              width: 30,
+              height: 30,
+              flexDirection: "column",
+              alignSelf: "flex-start",
+              marginRight: 30,
+            }}
+          />
+          <Text style={[styles.text, { color: theme.text.secondary }]}>
+            Change Theme
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.ui.tertiary, flexDirection:'row', justifyContent:'center', alignItems:'center' }]}
-          onPress={() => navigation.navigate('UpdatePassword')}>
-          <Ionicons name="md-key" size={30} color={theme.quaternary} style = {{flexDirection: 'column', alignSelf:'flex-start', marginRight:30}}/>
-          <Text style={[styles.text, { color: theme.text.secondary }]}>Update Password</Text>
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+          onPress={() => navigation.navigate("UpdatePassword")}
+        >
+          <Image
+            source={require("../assets/images/settings_UpdatePW.png")}
+            style={{
+              width: 30,
+              height: 30,
+              flexDirection: "column",
+              alignSelf: "flex-start",
+              marginRight: 30,
+            }}
+          />
+          <Text style={[styles.text, { color: theme.text.secondary }]}>
+            Update Password
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.ui.quaternary, flexDirection:'row', justifyContent:'center', alignItems:'center' }]}
-          onPress={() => setModalVisible(true)}>
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+          onPress={() => setModalVisible(true)}
+        >
           {/* <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{flexDirection: 'column', alignSelf:'flex-start'}}/>  */}
-          <Text style={[styles.text, { color: theme.text.secondary }]}>Log Out</Text>
+          <Text style={[styles.text, { color: theme.text.secondary }]}>
+            Log Out
+          </Text>
         </TouchableOpacity>
       </View>
       <Modal
@@ -62,21 +126,29 @@ export const SettingsScreen = ({ navigation }) => {
         }}
       >
         <View style={[styles.modalContainer]}>
-          <View style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}>
-            <Text style={[styles.text, { color: theme.text.secondary }]}>Are you sure?</Text>
-            <View style={{ flexDirection: 'row' }}>
+          <View
+            style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}
+          >
+            <Text style={[styles.text, { color: theme.text.secondary }]}>
+              Are you sure?
+            </Text>
+            <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
                 style={[styles.modalButton]}
-                onPress={handleLogout}>
-                <Text style={[styles.text, { color: theme.text.error }]}>Confirm</Text>
+                onPress={handleLogout}
+              >
+                <Text style={[styles.text, { color: theme.text.error }]}>
+                  Confirm
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.modalButton]}
-                onPress={() => setModalVisible(false)}>
-                <Text style={[styles.text, { color: theme.text.secondary }]}>Close</Text>
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={[styles.text, { color: theme.text.secondary }]}>
+                  Close
+                </Text>
               </TouchableOpacity>
-
-              
             </View>
           </View>
         </View>
@@ -88,39 +160,39 @@ export const SettingsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center'
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
   title: {
     fontSize: 40,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingTop: 90,
-    paddingBottom: 50
+    paddingBottom: 50,
   },
   text: {
     fontSize: 17,
-    fontWeight: 'bold',
-    alignContent: 'center'
+    fontWeight: "bold",
+    alignContent: "center",
   },
   button: {
     padding: 20,
     paddingHorizontal: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 35,
     margin: 15,
   },
   modal: {
     borderRadius: 25,
     padding: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '62%',
+    justifyContent: "center",
+    alignItems: "center",
+    width: "62%",
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     margin: 5,
   },
   modalButton: {
@@ -128,5 +200,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     margin: 8,
     marginTop: 12,
-  }
+  },
 });

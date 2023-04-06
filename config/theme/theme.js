@@ -34,7 +34,10 @@ export const defaultTheme = {
     error: "#D0421B",
     success: "#138000",
   },
-}
+  button: {
+    primary: "black",
+  },
+};
 
 export const darkTheme = {
   backgroundColor: "#202124",
@@ -65,9 +68,13 @@ export const darkTheme = {
   },
   text: {
     primary: "#E7F4F2",
+    secondary: "#202124",
     disabled: "#9C9C9C",
     inverse: "#FFFFFF",
     error: "#D0421B",
     success: "#138000",
   },
-}
+  button: {
+    primary: "white",
+  },
+};

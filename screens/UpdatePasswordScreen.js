@@ -1,8 +1,20 @@
 import React, { useState } from "react";
-import { TextInput, View, StyleSheet, Text, TouchableOpacity, Modal, Alert, Image, Pressable } from "react-native";
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Alert,
+} from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 import style from "../css/UpdatePassword.css";
-import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import {
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 import { auth } from "../config/firebase";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -16,7 +28,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const UpdatePasswordScreen = ({ navigation }) => {
   const { theme } = useTheme();
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [nPModalVisible, setModalVisible] = useState(false);
 
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
@@ -31,33 +43,34 @@ export const UpdatePasswordScreen = ({ navigation }) => {
         if (passwordVisibility===false)  {
           handlePasswordVisibility();
         }
-        setModalVisible(true);
+        setModalVisible(true);;
       })
-      .catch(error => {
-        Alert.alert('Wrong Password.');
+      .catch((error) => {
+        Alert.alert("Wrong Password.");
       });
   };
 
   const handleNPPress = (values) => {
-    const {new_pw, re_new_pw} = values;
+    const { new_pw, re_new_pw } = values;
     updatePassword(auth.currentUser, new_pw)
-    .then(() => {
-      // User successfully reauthenticated.
-      Alert.alert('Password changed successfully.');
-      navigation.goBack();
-    })
-    .catch(error => {
-      Alert.alert('Please try again later.');
-    });
+      .then(() => {
+        // User successfully reauthenticated.
+        Alert.alert("Password changed successfully.");
+        navigation.goBack();
+      })
+      .catch((error) => {
+        Alert.alert("Please try again later.");
+      });
   };
 
   return (
-    <Formik initialValues={{
-      new_pw:'',
-      re_new_pw: ''
-    }} 
-    validationSchema={signupValidationSchema}
-    onSubmit={values => handleNPPress(values)}
+    <Formik
+      initialValues={{
+        new_pw: "",
+        re_new_pw: "",
+      }}
+      validationSchema={signupValidationSchema}
+      onSubmit={(values) => handleNPPress(values)}
     >
       {({values, errors, touched, handleChange, setFieldTouched, handleSubmit, isValid}) =>(
 
