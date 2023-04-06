@@ -11,6 +11,7 @@ import {
 import { useTheme } from "../contexts/ThemeProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
+
 // import UpdatePassword from "./UpdatePasswordScreen";
 
 export const SettingsScreen = ({ navigation }) => {
@@ -98,6 +99,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: "bold",
+    paddingTop: 90,
+    paddingBottom: 50,
   },
   title: {
     fontSize: 40,
