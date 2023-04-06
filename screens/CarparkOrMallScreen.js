@@ -1,6 +1,14 @@
-import { Button, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  Image,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
 
 export function CarparkOrMallScreen({ route }) {
   const navigation = useNavigation();
@@ -27,6 +35,12 @@ export function CarparkOrMallScreen({ route }) {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/car.png')}
+        />
+      </View>
       <View style={styles.back}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -52,6 +66,11 @@ export function CarparkOrMallScreen({ route }) {
 // export default CarparkOrMallScreen;
 
 const styles = StyleSheet.create({
+  image: {
+    resizeMode: 'center',
+    width: 380,
+    alignSelf: 'flex-start',
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
