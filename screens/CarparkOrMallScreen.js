@@ -47,7 +47,7 @@ export function CarparkOrMallScreen({ route }) {
         </TouchableOpacity>
       </View>
       <View>
-        <Image style={styles.mallImage} source={require("../assets/car.jpg")} />
+        <Image style={styles.mallImage} source={require("../assets/car.png")} />
       </View>
       <Text style={[styles.backText, { color: theme.text.primary }]}>
         {" "}
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
   },
   mallImage: {
     marginTop: 200,
-    width: 360,
-    height: 200,
+    width: 380,
+    height: 180,
     borderRadius: 5,
     marginBottom: 10,
   },
