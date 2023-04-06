@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { Spacer } from "../components/Spacer";
-import { Text } from "../components/Text";
+import { Text } from "../components/TextComponent";
 
 const styles = StyleSheet.create({
   bold: { fontWeight: "bold" },
@@ -36,7 +36,9 @@ export const HistoryInfoCard = ({ history = {} }) => {
           {" "}
           {date}{" "}
         </Text>
-        <Text variant="label">{mall}</Text>
+        <Text style={{ textTransform: "uppercase" }} variant="label">
+          {mall}
+        </Text>
         <Section>
           <Spacer>
             {stores.map((store) => {
@@ -44,7 +46,7 @@ export const HistoryInfoCard = ({ history = {} }) => {
             })}
           </Spacer>
           <SectionEnd>
-            <Spacer>
+            <Spacer position="top" size="large">
               <TouchableOpacity onPress={() => {}}>
                 <Text variant="caption" style={styles.underline}>
                   Go Again
