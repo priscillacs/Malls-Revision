@@ -10,6 +10,7 @@ import { useTogglePasswordVisibility } from "../hooks";
 import { loginValidationSchema } from "../utils";
 import * as Font from "expo-font";
 
+
 export const LoginScreen = ({ navigation }) => {
   // const [loaded] = useFonts({
   //   DMSans_Regular: require("../assets/fonts/DMSans-Regular.ttf"),

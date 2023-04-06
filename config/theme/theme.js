@@ -1,6 +1,7 @@
 export const defaultTheme = {
   backgroundColor: "#E6FFFB",
   textColor: "#202124",
+  updatePasswordText: "#ffffff",
   nav: {
     backgroundColor: "#436661",
     active: "#E6FFFB",
@@ -36,6 +37,7 @@ export const defaultTheme = {
 export const darkTheme = {
   backgroundColor: "#202124",
   textColor: "#fff",
+  updatePasswordText: "#202124",
   nav: {
     backgroundColor: "#436661",
     active: "#E6FFFB",

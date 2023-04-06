@@ -19,6 +19,7 @@
 //     .label("Email")
 //     .email("Enter a valid email"),
 // });
+
 import * as Yup from "yup";
 
 const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
