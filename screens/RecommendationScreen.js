@@ -13,6 +13,7 @@ import SortByDropdown from "../components/SortByDropDown";
 import ShowLocationPermissionPopup from "../components/ShowLocationPermissionPopup";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "../contexts/ThemeProvider";
+import { setGlobalState, useGlobalState } from "../hooks/Global";
 
 const getDistance = async (lat1, lng1, lat2, lng2) => {
   const response = await fetch(
@@ -47,10 +48,13 @@ const getCarparkAvailability = async (carparkNumber) => {
     throw error;
   }
 };
-const userLocation = {
-  latitude: 1.3541190892039678,
-  longitude: 103.68761957122511,
-}; // Example user location
+
+const [origin] = useGlobalState("origin");
+const userLocation = origin;
+// const userLocation = {
+//   latitude: 1.3541190892039678,
+//   longitude: 103.68761957122511,
+// }; // Example user location
 const findTopMalls = async (sortOption, storesToVisit) => {
   const matchedStoresByMall = storesData.reduce((matchedStores, store) => {
     if (storesToVisit.includes(store.storeName)) {
