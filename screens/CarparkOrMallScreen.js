@@ -9,26 +9,45 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "../contexts/ThemeProvider";
+import newdata from "../data/database.json";
+import { setGlobalState, useGlobalState } from "../hooks/Global";
+
 export function CarparkOrMallScreen({ route }) {
   const navigation = useNavigation();
   const resultMall = route.params.resultMall;
   const resultStores = route.params.resultStores;
+  const [origin] = useGlobalState("origin");
+  console.log("Origin at CarparkOrScreen is:", origin);
   const { theme } = useTheme();
+
+  function findMallIndex(resultMall) {
+    var i;
+    for (i = 0; i < newdata.Malls.length; i++) {
+      if (newdata.Malls[i].mallId === resultMall) break;
+    }
+    return i;
+  }
+  const mallIndex = findMallIndex(resultMall);
+
   function mallChoiceHandler() {
     console.log("Mall Clicked.");
+    var destination = newdata.Malls[mallIndex].mallDetails.Location;
     navigation.navigate("Map", {
-      choice: "mall",
       resultMall: resultMall,
       resultStores: resultStores,
+      origin: origin,
+      destination: destination,
     });
   }
 
   function carparkChoiceHandler() {
     console.log("Carpark Clicked.");
+    var destination = newdata.Malls[mallIndex].mallDetails.nearestCarparkLocation;
     navigation.navigate("Map", {
-      choice: "carpark",
       resultMall: resultMall,
       resultStores: resultStores,
+      origin: origin,
+      destination: destination,
     });
   }
 
