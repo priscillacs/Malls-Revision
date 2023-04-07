@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import storeData from "../data/stores.json";
 import mallData from "../data/database.json";
 import { useTheme } from "../contexts/ThemeProvider";
+import * as Location from 'expo-location';
 
 export const HomeScreen = () => {
   const [categorisedData, setCategorisedData] = useState([]);
@@ -25,11 +26,28 @@ export const HomeScreen = () => {
   const [term, setTerm] = useState("");
   const [category, setCategory] = useState("All");
   const [cart] = useGlobalState("cart");
+  const [origin] = useGlobalState("origin");
   const { theme } = useTheme();
   useEffect(() => {
     getStores();
     return () => {};
   }, []);
+
+
+  //For Get Location
+  async function getLocation() {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log("Over here the location that the system gets is: ", location);
+    console.log("Latitude: ", location.coords.latitude);
+    console.log("Longitude", location.coords.longitude);
+    setGlobalState("origin", { latitude: location.coords.latitude, longitude: location.coords.longitude });
+  };
 
   const getStores = () => {
     setCategorisedData(storeData);
@@ -79,6 +97,7 @@ export const HomeScreen = () => {
             cart.indexOf(item) < 0
               ? setGlobalState("cart", [...cart, item])
               : null;
+            getLocation();
           }}
         >
           <ImageBackground
