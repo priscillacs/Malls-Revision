@@ -11,6 +11,7 @@ import {
   Modal,
   Image,
   Pressable,
+  Alert,
 } from "react-native";
 import { useTheme } from "../contexts/ThemeProvider";
 // import { signOut } from "firebase/auth";
@@ -44,7 +45,7 @@ export const SettingsScreen = ({ navigation }) => {
     const cred = EmailAuthProvider.credential(auth.currentUser.email, text);
     reauthenticateWithCredential(auth.currentUser, cred)
       .then(() => {
-        auth.currentUser.delete;
+        auth.currentUser.delete();
       })
       .catch((error) => {
         Alert.alert("Wrong Password.");
@@ -73,94 +74,94 @@ export const SettingsScreen = ({ navigation }) => {
         <Text style={[styles.title, { color: theme.text.primary }]}>
           Settings
         </Text>
-        <View>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              {
-                backgroundColor: theme.ui.tertiary,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              },
-            ]}
-            onPress={changeTheme}
-          >
-            <Ionicons
-              name="color-palette"
-              size={30}
-              color={theme.quaternary}
-              style={{
-                flexDirection: "column",
-                alignSelf: "flex-start",
-                marginRight: 40,
-              }}
-            />
-            <Text style={[styles.text, { color: theme.text.secondary }]}>
-              Change Theme
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              {
-                backgroundColor: theme.ui.tertiary,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              },
-            ]}
-            onPress={() => navigation.navigate("UpdatePassword")}
-          >
-            <Ionicons
-              name="md-key"
-              size={30}
-              color={theme.quaternary}
-              style={{
-                flexDirection: "column",
-                alignSelf: "flex-start",
-                marginRight: 30,
-              }}
-            />
-            <Text style={[styles.text, { color: theme.text.secondary }]}>
-              Update Password
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              {
-                backgroundColor: theme.ui.quaternary,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              },
-            ]}
-            onPress={() => setModalVisible(true)}
-          >
-            {/* <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{flexDirection: 'column', alignSelf:'flex-start'}}/>  */}
-            <Text style={[styles.text, { color: theme.text.secondary }]}>
-              Log Out
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              {
-                backgroundColor: theme.ui.quaternary,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              },
-            ]}
-            onPress={() => setModalDAVisible(true)}
-          >
-            {/* <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{flexDirection: 'column', alignSelf:'flex-start'}}/>  */}
-            <Text style={[styles.text, { color: theme.text.error }]}>
-              Delete Account
-            </Text>
-          </TouchableOpacity>
-        </View>
+      </View>
+      <View>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+          onPress={changeTheme}
+        >
+          <Ionicons
+            name="color-palette"
+            size={30}
+            color={theme.quaternary}
+            style={{
+              flexDirection: "column",
+              alignSelf: "flex-start",
+              marginRight: 40,
+            }}
+          />
+          <Text style={[styles.text, { color: theme.text.secondary }]}>
+            Change Theme
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.tertiary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+          onPress={() => navigation.navigate("UpdatePassword")}
+        >
+          <Ionicons
+            name="md-key"
+            size={30}
+            color={theme.quaternary}
+            style={{
+              flexDirection: "column",
+              alignSelf: "flex-start",
+              marginRight: 30,
+            }}
+          />
+          <Text style={[styles.text, { color: theme.text.secondary }]}>
+            Update Password
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.quaternary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+          onPress={() => setModalVisible(true)}
+        >
+          {/* <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{flexDirection: 'column', alignSelf:'flex-start'}}/>  */}
+          <Text style={[styles.text, { color: theme.text.secondary }]}>
+            Log Out
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: theme.ui.quaternary,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
+          onPress={() => setModalDAVisible(true)}
+        >
+          {/* <Image source={require('../assets/images/settings_ThemeKey.png')} style = {{flexDirection: 'column', alignSelf:'flex-start'}}/>  */}
+          <Text style={[styles.text, { color: theme.text.error }]}>
+            Delete Account
+          </Text>
+        </TouchableOpacity>
         <Modal
           animationType="slide"
           transparent={true}
@@ -170,9 +171,7 @@ export const SettingsScreen = ({ navigation }) => {
           }}
         >
           <View style={[styles.modalContainer]}>
-            <View
-              style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}
-            >
+            <View style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}>
               <Text style={[styles.text, { color: theme.text.secondary }]}>
                 Are you sure?
               </Text>
@@ -207,12 +206,8 @@ export const SettingsScreen = ({ navigation }) => {
         }}
       >
         <View style={[styles.modalContainer]}>
-          <View
-            style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}
-          >
-            <Text
-              style={[styles.text, { color: theme.text.secondary, padding: 3 }]}
-            >
+          <View style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}>
+            <Text style={[styles.text, { color: theme.text.secondary, padding: 3 }]}>
               Enter Password
             </Text>
             <View>
