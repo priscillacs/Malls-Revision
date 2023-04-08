@@ -86,7 +86,8 @@ export function ResultScreen({ route }) {
   const [buttonPressed, setButtonPressed] = useState(false);
   const resultMall = route.params.resultMall;
   const resultStores = route.params.resultStores;
-
+  console.log("result mall: ", resultMall);
+  console.log("result stores: ", resultStores);
   const [toDoData, setToDoData] = useState([]);
 
   useEffect(() => {

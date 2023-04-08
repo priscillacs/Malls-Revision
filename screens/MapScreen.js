@@ -10,8 +10,10 @@ import newdata from "../data/database.json";
 import DoneButton from "../components/DoneButton";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
-
+import { useTheme } from "../contexts/ThemeProvider";
 export const MapScreen = ({ route }) => {
+  const { theme } = useTheme();
+
   const navigation = useNavigation();
   const api_key = Constants.manifest.extra.apiKeyGoogle;
   const resultMall = route.params.resultMall;
@@ -19,14 +21,16 @@ export const MapScreen = ({ route }) => {
   const origin = route.params.origin;
   const destination = route.params.destination;
 
-  const rlat = Math.round( (origin.latitude + destination.latitude)/2 * 1000)/1000;
-  const rlng = Math.round( (origin.longitude + destination.longitude)/2 * 1000)/1000;
+  const rlat =
+    Math.round(((origin.latitude + destination.latitude) / 2) * 1000) / 1000;
+  const rlng =
+    Math.round(((origin.longitude + destination.longitude) / 2) * 1000) / 1000;
 
   const distance = getDistance(
     { latitude: origin.latitude, longitude: origin.longitude },
     { latitude: destination.latitude, longitude: destination.longitude }
   );
-  const LATITUDE_DELTA = distance / 111000; 
+  const LATITUDE_DELTA = distance / 111000;
   const LONGITUDE_DELTA = LATITUDE_DELTA * (9 / 16) * 2;
 
   const region = {
@@ -45,21 +49,30 @@ export const MapScreen = ({ route }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View style={[styles.container]}>
+      <View style={[styles.header, { backgroundColor: theme.background }]}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.goBack()}
         >
-          <MaterialIcons name="arrow-back" size={24} color="black" />
-          <Text style={styles.buttonText}>Left</Text>
+          <MaterialIcons
+            name="arrow-back"
+            size={24}
+            style={{ color: theme.text.primary }}
+          />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button]}
           onPress={headerButtonPressHandler}
         >
-          <MaterialIcons name="done-outline" size={24} color="black" />
-          <Text style={styles.buttonText}>Right</Text>
+          <MaterialIcons
+            name="done-outline"
+            size={24}
+            style={{ color: theme.text.primary }}
+          />
+          <Text style={[styles.buttonText, { color: theme.text.primary }]}>
+            Done
+          </Text>
         </TouchableOpacity>
       </View>
       <MapView
@@ -90,18 +103,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    marginTop: 35,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 8,
+    padding: 5,
     backgroundColor: "white",
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
   },
   button: {
     marginTop: 10,
+    marginBottom: 10,
     flexDirection: "row",
-    padding: 16,
+    padding: 5,
     borderRadius: 8,
   },
   buttonText: {

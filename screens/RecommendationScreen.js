@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SortByDropdown from "../components/SortByDropDown";
-import ShowLocationPermissionPopup from "../components/ShowLocationPermissionPopup";
+// import ShowLocationPermissionPopup from "../components/ShowLocationPermissionPopup";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "../contexts/ThemeProvider";
 import { setGlobalState, useGlobalState } from "../hooks/Global";
@@ -49,13 +49,13 @@ const getCarparkAvailability = async (carparkNumber) => {
   }
 };
 
-const [origin] = useGlobalState("origin");
-const userLocation = origin;
-// const userLocation = {
-//   latitude: 1.3541190892039678,
-//   longitude: 103.68761957122511,
-// }; // Example user location
-const findTopMalls = async (sortOption, storesToVisit) => {
+const userLocation = {
+  latitude: 1.3541190892039678,
+  longitude: 103.68761957122511,
+}; // Example user location
+const findTopMalls = async (sortOption, storesToVisit, origin) => {
+  const userLocation = origin;
+  console.log("test" + origin);
   const matchedStoresByMall = storesData.reduce((matchedStores, store) => {
     if (storesToVisit.includes(store.storeName)) {
       store.storeDetails.location.forEach((location) => {
@@ -183,6 +183,7 @@ const findTopMalls = async (sortOption, storesToVisit) => {
 };
 
 export const RecommendationScreen = ({ route }) => {
+  const [origin] = useGlobalState("origin");
   const [sortOption, setSortOption] = useState("Default");
   const [topMalls, setTopMalls] = useState([]);
   const [expandedMalls, setExpandedMalls] = useState([]);
@@ -192,7 +193,7 @@ export const RecommendationScreen = ({ route }) => {
 
   useEffect(() => {
     const fetchTopMalls = async () => {
-      const malls = await findTopMalls(sortOption, storesToVisit);
+      const malls = await findTopMalls(sortOption, storesToVisit, origin);
       setTopMalls(malls);
     };
     fetchTopMalls();
@@ -215,9 +216,9 @@ export const RecommendationScreen = ({ route }) => {
       headerShown: false,
     });
   }, []);
-  useEffect(() => {
-    ShowLocationPermissionPopup();
-  }, []);
+  // useEffect(() => {
+  //   ShowLocationPermissionPopup();
+  // }, []);
 
   return (
     <SafeAreaView style={[{ flex: 1 }]}>
