@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, Text } from "react-native";
 import storesData from "../data/stores.json";
 import mallData from "../data/database.json";
+import Constants from "expo-constants";
 import {
   ScrollView,
   TouchableOpacity,
@@ -15,9 +16,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "../contexts/ThemeProvider";
 import { setGlobalState, useGlobalState } from "../hooks/Global";
 
-const getDistance = async (lat1, lng1, lat2, lng2) => {
+const getDistance = async (lat1, lng1, lat2, lng2, key) => {
   const response = await fetch(
-    `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${lat1},${lng1}&destinations=${lat2},${lng2}&key=AIzaSyCMDxATNzHSEla0qzZC2BdqwIAST_ouKJ0`
+    `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${lat1},${lng1}&destinations=${lat2},${lng2}&key=${key}`
   );
   const data = await response.json();
   const distance = data.rows[0].elements[0].distance.value / 1000;
@@ -49,11 +50,11 @@ const getCarparkAvailability = async (carparkNumber) => {
   }
 };
 
-const userLocation = {
-  latitude: 1.3541190892039678,
-  longitude: 103.68761957122511,
-}; // Example user location
-const findTopMalls = async (sortOption, storesToVisit, origin) => {
+// const userLocation = {
+//   latitude: 1.3541190892039678,
+//   longitude: 103.68761957122511,
+// }; // Example user location
+const findTopMalls = async (sortOption, storesToVisit, origin, key) => {
   const userLocation = origin;
   console.log("test" + origin);
   const matchedStoresByMall = storesData.reduce((matchedStores, store) => {
@@ -96,7 +97,8 @@ const findTopMalls = async (sortOption, storesToVisit, origin) => {
           userLocation.latitude,
           userLocation.longitude,
           latitude,
-          longitude
+          longitude,
+          key
         );
         const { nearestCarpark } = mallData.Malls.find(
           (m) => m.mallId === mall.mallId
@@ -124,7 +126,8 @@ const findTopMalls = async (sortOption, storesToVisit, origin) => {
           userLocation.latitude,
           userLocation.longitude,
           latitude,
-          longitude
+          longitude,
+          key
         );
         const { nearestCarpark } = mallData.Malls.find(
           (m) => m.mallId === mall.mallId
@@ -152,7 +155,8 @@ const findTopMalls = async (sortOption, storesToVisit, origin) => {
           userLocation.latitude,
           userLocation.longitude,
           latitude,
-          longitude
+          longitude,
+          key
         );
         const { nearestCarpark } = mall.mallDetails;
         const carparkAvailability = await getCarparkAvailability(
@@ -188,12 +192,19 @@ export const RecommendationScreen = ({ route }) => {
   const [topMalls, setTopMalls] = useState([]);
   const [expandedMalls, setExpandedMalls] = useState([]);
 
+  const api_key = Constants.manifest.extra.apiKeyGoogle2;
+
   const { storesToVisit } = route.params;
   console.log(storesToVisit);
 
   useEffect(() => {
     const fetchTopMalls = async () => {
-      const malls = await findTopMalls(sortOption, storesToVisit, origin);
+      const malls = await findTopMalls(
+        sortOption,
+        storesToVisit,
+        origin,
+        api_key
+      );
       setTopMalls(malls);
     };
     fetchTopMalls();
