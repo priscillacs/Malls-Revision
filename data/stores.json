@@ -1237,12 +1237,11 @@
       "location": [
         { "id": 1, "mallName": "Tiong Bahru Plaza" },
         { "id": 2, "mallName": "Changi City Point" },
-        { "id": 3, "mallName": "Changi City Point" },
-        { "id": 4, "mallName": "Eastpoint Mall" },
-        { "id": 5, "mallName": "Hougang Mall" },
-        { "id": 6, "mallName": "The Centrepoint" },
-        { "id": 7, "mallName": "Waterway Point" },
-        { "id": 8, "mallName": "White Sands" }
+        { "id": 3, "mallName": "Eastpoint Mall" },
+        { "id": 4, "mallName": "Hougang Mall" },
+        { "id": 5, "mallName": "The Centrepoint" },
+        { "id": 6, "mallName": "Waterway Point" },
+        { "id": 7, "mallName": "White Sands" }
       ],
       "image": "https://www.tiongbahruplaza.com.sg/images/344Starbucks%20380.png",
       "category": ["Food & Restaurants"]

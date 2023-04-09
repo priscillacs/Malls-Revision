@@ -35,7 +35,7 @@ export const LoginScreen = ({ navigation }) => {
           {/* LogoContainer: consits app logo and screen title */}
           <View style={styles.logoContainer}>
             {/* <Logo uri={Images.logo} /> */}
-            <Text style={styles.screenTitle}>WELCOME TO MALLS!</Text>
+            <Text style={styles.screenTitle}>WELCOME TO SHOP-EZ!</Text>
           </View>
           <View style={styles.boximage}>
             <Image

@@ -23,7 +23,7 @@ import {
 import { auth } from "../config/firebase";
 import { useTogglePasswordVisibility } from "../hooks/useTogglePasswordVisibility";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
 //logo
 import { Ionicons } from "@expo/vector-icons";
 // import { Ionicons } from "@expo/vector-icons";
@@ -61,7 +61,7 @@ export const SettingsScreen = ({ navigation }) => {
   const handleLogout = () => {
     signOut(auth).catch((error) => console.log("Error logging out: ", error));
   };
-
+  const navigation2 = useNavigation();
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -171,7 +171,16 @@ export const SettingsScreen = ({ navigation }) => {
           }}
         >
           <View style={[styles.modalContainer]}>
-            <View style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}>
+            <View
+              style={[
+                styles.modal,
+                {
+                  backgroundColor: theme.ui.quaternary,
+                  borderColor: theme.text.error,
+                  borderWidth: 3,
+                },
+              ]}
+            >
               <Text style={[styles.text, { color: theme.text.secondary }]}>
                 Are you sure?
               </Text>
@@ -206,8 +215,19 @@ export const SettingsScreen = ({ navigation }) => {
         }}
       >
         <View style={[styles.modalContainer]}>
-          <View style={[styles.modal, { backgroundColor: theme.ui.quaternary }]}>
-            <Text style={[styles.text, { color: theme.text.secondary, padding: 3 }]}>
+          <View
+            style={[
+              styles.modal,
+              {
+                backgroundColor: theme.ui.quaternary,
+                borderColor: theme.text.error,
+                borderWidth: 3,
+              },
+            ]}
+          >
+            <Text
+              style={[styles.text, { color: theme.text.secondary, padding: 3 }]}
+            >
               Enter Password
             </Text>
             <View>
@@ -246,7 +266,13 @@ export const SettingsScreen = ({ navigation }) => {
               </Pressable>
             </View>
             <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity style={[styles.modalButton]} onPress={handleDA}>
+              <TouchableOpacity
+                style={[styles.modalButton]}
+                onPress={() => {
+                  handleDA();
+                  navigation2.navigate("Login");
+                }}
+              >
                 <Text style={[styles.text, { color: theme.text.error }]}>
                   Confirm
                 </Text>
