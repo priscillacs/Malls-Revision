@@ -35,7 +35,7 @@ export const LoginScreen = ({ navigation }) => {
           {/* LogoContainer: consits app logo and screen title */}
           <View style={styles.logoContainer}>
             {/* <Logo uri={Images.logo} /> */}
-            <Text style={styles.screenTitle}>WELCOME TO MALLS!</Text>
+            <Text style={styles.screenTitle}>WELCOME TO SHOP-EZ!</Text>
           </View>
           <View style={styles.boximage}>
             <Image
@@ -155,8 +155,10 @@ const styles = StyleSheet.create({
   bottomcontainer: {
     flex: 1,
     backgroundColor: "#436661",
+    paddingTop: 30,
     paddingLeft: 30,
     paddingRight: 30,
+    paddingBottom: 75,
   },
   logoContainer: {
     alignItems: "center",

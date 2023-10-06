@@ -41,6 +41,7 @@ export default {
       appId: process.env.APP_ID,
       databaseURL: process.env.DATABASE_URL,
       apiKeyGoogle: process.env.GOOGLE_MAP_API,
+      apiKeyGoogle2: process.env.GOOGLE_MAP_API_2,
     },
   },
 };

@@ -23,6 +23,8 @@ export const defaultTheme = {
     disabled: "#DEDEDE",
     error: "#D0421B",
     success: "#138000",
+    input: "#cccccc",
+    inputBox: "#8c8c8c"
   },
   text: {
     primary: "#436661",
@@ -32,7 +34,10 @@ export const defaultTheme = {
     error: "#D0421B",
     success: "#138000",
   },
-}
+  button: {
+    primary: "black",
+  },
+};
 
 export const darkTheme = {
   backgroundColor: "#202124",
@@ -58,12 +63,18 @@ export const darkTheme = {
     disabled: "#DEDEDE",
     error: "#D0421B",
     success: "#138000",
+    input: "#e8e8e8",
+    inputBox: "#8c8c8c"
   },
   text: {
     primary: "#E7F4F2",
+    secondary: "#202124",
     disabled: "#9C9C9C",
     inverse: "#FFFFFF",
     error: "#D0421B",
     success: "#138000",
   },
-}
+  button: {
+    primary: "white",
+  },
+};

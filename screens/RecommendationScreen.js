@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { View, Text } from "react-native";
 import storesData from "../data/stores.json";
 import mallData from "../data/database.json";
+import Constants from "expo-constants";
 import {
   ScrollView,
   TouchableOpacity,
@@ -10,12 +11,14 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SortByDropdown from "../components/SortByDropDown";
-import ShowLocationPermissionPopup from "../components/ShowLocationPermissionPopup";
+// import ShowLocationPermissionPopup from "../components/ShowLocationPermissionPopup";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useTheme } from "../contexts/ThemeProvider";
+import { setGlobalState, useGlobalState } from "../hooks/Global";
 
-const getDistance = async (lat1, lng1, lat2, lng2) => {
+const getDistance = async (lat1, lng1, lat2, lng2, key) => {
   const response = await fetch(
-    `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${lat1},${lng1}&destinations=${lat2},${lng2}&key=AIzaSyCMDxATNzHSEla0qzZC2BdqwIAST_ouKJ0`
+    `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${lat1},${lng1}&destinations=${lat2},${lng2}&key=${key}`
   );
   const data = await response.json();
   const distance = data.rows[0].elements[0].distance.value / 1000;
@@ -46,11 +49,10 @@ const getCarparkAvailability = async (carparkNumber) => {
     throw error;
   }
 };
-const userLocation = {
-  latitude: 1.3541190892039678,
-  longitude: 103.68761957122511,
-}; // Example user location
-const findTopMalls = async (sortOption, storesToVisit) => {
+
+const findTopMalls = async (sortOption, storesToVisit, origin, key) => {
+  const userLocation = origin;
+  console.log("test" + origin);
   const matchedStoresByMall = storesData.reduce((matchedStores, store) => {
     if (storesToVisit.includes(store.storeName)) {
       store.storeDetails.location.forEach((location) => {
@@ -64,90 +66,16 @@ const findTopMalls = async (sortOption, storesToVisit) => {
     return matchedStores;
   }, {});
 
-  const mallMatchCount_1 = Object.entries(matchedStoresByMall).reduce(
-    (matchCount, [mallName, stores]) => {
-      matchCount[mallName] = stores.length;
-      return matchCount;
-    },
-    {}
-  );
-
-  const topMalls = mallData.Malls.map((mall) => ({
-    mallId: mall.mallId,
-    matchedStoreCount: mallMatchCount_1[mall.mallId] || 0,
-  }))
-    .sort((a, b) => b.matchedStoreCount - a.matchedStoreCount)
-    .slice(0, 5);
-
-  let sortedMalls;
-
-  if (sortOption === "Distance") {
-    const mallsWithDistance = await Promise.all(
-      topMalls.map(async (mall) => {
-        const { latitude, longitude } = mallData.Malls.find(
-          (m) => m.mallId === mall.mallId
-        ).mallDetails.Location;
-        const distance = await getDistance(
-          userLocation.latitude,
-          userLocation.longitude,
-          latitude,
-          longitude
-        );
-        const { nearestCarpark } = mallData.Malls.find(
-          (m) => m.mallId === mall.mallId
-        ).mallDetails;
-        const carparkAvailability = await getCarparkAvailability(
-          nearestCarpark
-        );
-        return { mallId: mall.mallId, distance, carparkAvailability };
-      })
-    );
-    sortedMalls = mallsWithDistance
-      .sort((mall1, mall2) => mall1.distance - mall2.distance)
-      .map((mall) => ({
-        mallId: mall.mallId,
-        distance: mall.distance.toFixed(2),
-        carparkAvailability: mall.carparkAvailability,
-      }));
-  } else if (sortOption === "Carpark") {
-    const mallsWithCarparkAvailability = await Promise.all(
-      topMalls.map(async (mall) => {
-        const { latitude, longitude } = mallData.Malls.find(
-          (m) => m.mallId === mall.mallId
-        ).mallDetails.Location;
-        const distance = await getDistance(
-          userLocation.latitude,
-          userLocation.longitude,
-          latitude,
-          longitude
-        );
-        const { nearestCarpark } = mallData.Malls.find(
-          (m) => m.mallId === mall.mallId
-        ).mallDetails;
-        const carparkAvailability = await getCarparkAvailability(
-          nearestCarpark
-        );
-        return { mallId: mall.mallId, distance, carparkAvailability };
-      })
-    );
-    sortedMalls = mallsWithCarparkAvailability
-      .sort(
-        (mall1, mall2) => mall2.carparkAvailability - mall1.carparkAvailability
-      )
-      .map((mall) => ({
-        mallId: mall.mallId,
-        distance: mall.distance.toFixed(2),
-        carparkAvailability: mall.carparkAvailability,
-      }));
-  } else {
-    const mallsWithDistanceAndCarpark = await Promise.all(
-      mallData.Malls.map(async (mall) => {
+  const getMallsWithDistanceAndCarpark = async (malls) => {
+    return Promise.all(
+      malls.map(async (mall) => {
         const { latitude, longitude } = mall.mallDetails.Location;
         const distance = await getDistance(
           userLocation.latitude,
           userLocation.longitude,
           latitude,
-          longitude
+          longitude,
+          key
         );
         const { nearestCarpark } = mall.mallDetails;
         const carparkAvailability = await getCarparkAvailability(
@@ -156,38 +84,73 @@ const findTopMalls = async (sortOption, storesToVisit) => {
         return { mallId: mall.mallId, distance, carparkAvailability };
       })
     );
-    const mallMatchCount = Object.entries(matchedStoresByMall).reduce(
-      (matchCount, [mallName, stores]) => {
-        matchCount[mallName] = stores.length;
-        return matchCount;
-      },
-      {}
-    );
+  };
 
-    sortedMalls = mallsWithDistanceAndCarpark
-      .map((mall) => ({
-        mallId: mall.mallId,
-        distance: mall.distance.toFixed(2),
-        carparkAvailability: mall.carparkAvailability,
-        matchedStoreCount: mallMatchCount[mall.mallId] || 0,
-      }))
-      .sort((a, b) => b.matchedStoreCount - a.matchedStoreCount);
+  const mallsWithDistanceAndCarpark = await getMallsWithDistanceAndCarpark(
+    mallData.Malls
+  );
+  const topMalls = mallsWithDistanceAndCarpark
+    .map((mall) => {
+      return {
+        ...mall,
+        matchedStoreCount: matchedStoresByMall[mall.mallId]?.length || 0,
+      };
+    })
+    .sort((a, b) => {
+      if (a.matchedStoreCount === b.matchedStoreCount) {
+        return a.distance - b.distance; // Fix here
+      } else {
+        return b.matchedStoreCount - a.matchedStoreCount;
+      }
+    })
+    .slice(0, 5);
+
+  if (sortOption === "Distance") {
+    sortedMalls = await getMallsWithDistanceAndCarpark(
+      topMalls.map((mall) =>
+        mallData.Malls.find((m) => m.mallId === mall.mallId)
+      )
+    );
+    sortedMalls.sort((mall1, mall2) => mall1.distance - mall2.distance);
+  } else if (sortOption === "Carpark") {
+    sortedMalls = await getMallsWithDistanceAndCarpark(
+      topMalls.map((mall) =>
+        mallData.Malls.find((m) => m.mallId === mall.mallId)
+      )
+    );
+    sortedMalls.sort(
+      (mall1, mall2) => mall2.carparkAvailability - mall1.carparkAvailability
+    );
+  } else {
+    sortedMalls = topMalls;
   }
 
-  return sortedMalls.slice(0, 5);
+  return sortedMalls.map((mall) => ({
+    mallId: mall.mallId,
+    distance: mall.distance.toFixed(2),
+    carparkAvailability: mall.carparkAvailability,
+  }));
 };
 
 export const RecommendationScreen = ({ route }) => {
+  const [origin] = useGlobalState("origin");
   const [sortOption, setSortOption] = useState("Default");
   const [topMalls, setTopMalls] = useState([]);
   const [expandedMalls, setExpandedMalls] = useState([]);
+
+  const api_key = Constants.manifest.extra.apiKeyGoogle2;
 
   const { storesToVisit } = route.params;
   console.log(storesToVisit);
 
   useEffect(() => {
     const fetchTopMalls = async () => {
-      const malls = await findTopMalls(sortOption, storesToVisit);
+      const malls = await findTopMalls(
+        sortOption,
+        storesToVisit,
+        origin,
+        api_key
+      );
       setTopMalls(malls);
     };
     fetchTopMalls();
@@ -200,6 +163,7 @@ export const RecommendationScreen = ({ route }) => {
     }
   };
 
+  const { theme } = useTheme();
   const isExpanded = (mallName) => expandedMalls.includes(mallName);
 
   const navigation = useNavigation();
@@ -209,24 +173,33 @@ export const RecommendationScreen = ({ route }) => {
       headerShown: false,
     });
   }, []);
-  useEffect(() => {
-    ShowLocationPermissionPopup();
-  }, []);
+  // useEffect(() => {
+  //   ShowLocationPermissionPopup();
+  // }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#e6fffb" }}>
-      <View style={styles.container}>
+    <SafeAreaView style={[{ flex: 1 }]}>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
         <View style={styles.back}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color="black" />
-            <Text style={styles.backText}> Back </Text>
+            <MaterialIcons
+              name="arrow-back"
+              size={24}
+              style={{ color: theme.text.primary }}
+              // color="white"
+            />
+            {/* <Text style={styles.backText}> Back </Text> */}
           </TouchableOpacity>
         </View>
         <View style={styles.header}>
-          <Text style={styles.titleText}>Results</Text>
+          <Text style={[styles.titleText, { color: theme.text.primary }]}>
+            Results
+          </Text>
         </View>
         <View style={styles.subHeader}>
-          <Text style={styles.titleMatch}>Best Matches:</Text>
+          <Text style={[styles.titleMatch, { color: theme.text.primary }]}>
+            Best Matches:
+          </Text>
           <SortByDropdown
             sortOption={sortOption}
             setSortOption={setSortOption}
@@ -325,6 +298,9 @@ const styles = StyleSheet.create({
   container: {
     flext: 1,
     paddingTop: 30,
+    marginTop: 50,
+    paddingTop: 20,
+    paddingBottom: 180,
   },
   back: {
     flexDirection: "row",
@@ -335,23 +311,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
   },
-  // back: {
-  //   position: "absolute",
-  //   top: 40,
-  //   left: 0,
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   padding: 10,
-  // },
-  // backButton: {
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   marginBottom: 10,
-  // },
-  // backText: {
-  //   fontSize: 18,
-  //   marginLeft: 5,
-  // },
+  back: {
+    padding: 10,
+  },
   header: {
     flexDirection: "row",
     padding: 10,

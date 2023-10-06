@@ -4,8 +4,8 @@ import {
   Text,
   StyleSheet,
   View,
+  ImageBackground,
   Image,
-  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
@@ -13,8 +13,11 @@ import SearchBar from "../components/SearchBar";
 import { Picker } from "@react-native-picker/picker";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { setGlobalState, useGlobalState } from "../hooks/Global";
-import data from "../data/stores.json";
-// import { useTheme } from "../contexts/ThemeProvider";
+import { Ionicons } from "@expo/vector-icons";
+import storeData from "../data/stores.json";
+import mallData from "../data/database.json";
+import { useTheme } from "../contexts/ThemeProvider";
+import * as Location from 'expo-location';
 
 export const HomeScreen = () => {
   const [categorisedData, setCategorisedData] = useState([]);
@@ -23,16 +26,33 @@ export const HomeScreen = () => {
   const [term, setTerm] = useState("");
   const [category, setCategory] = useState("All");
   const [cart] = useGlobalState("cart");
-  // const { theme } = useTheme();
+  const [origin] = useGlobalState("origin");
+  const { theme } = useTheme();
   useEffect(() => {
     getStores();
     return () => {};
   }, []);
 
+
+  //For Get Location
+  async function getLocation() {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    console.log("Over here the location that the system gets is: ", location);
+    console.log("Latitude: ", location.coords.latitude);
+    console.log("Longitude", location.coords.longitude);
+    setGlobalState("origin", { latitude: location.coords.latitude, longitude: location.coords.longitude });
+  };
+
   const getStores = () => {
-    setCategorisedData(data);
-    setFilteredData(data);
-    setMasterData(data);
+    setCategorisedData(storeData);
+    setFilteredData(storeData);
+    setMasterData(storeData);
   };
 
   const searchFilter = (text) => {
@@ -77,14 +97,25 @@ export const HomeScreen = () => {
             cart.indexOf(item) < 0
               ? setGlobalState("cart", [...cart, item])
               : null;
+            getLocation();
           }}
         >
-          <Image
+          <ImageBackground
             style={styles.image}
             source={{ uri: `${item.storeDetails.image}` }}
-          />
+          >
+            {cart.indexOf(item) > -1 ? (
+              <View
+                style={{ flexDirection: "row", justifyContent: "flex-end" }}
+              >
+                <Ionicons name="checkmark-circle" size={24} color="#7fb4ac" />
+              </View>
+            ) : null}
+          </ImageBackground>
         </TouchableHighlight>
-        <Text style={[styles.text]}>{item.storeName.toUpperCase()}</Text>
+        <Text style={[styles.text, { color: theme.textColor }]}>
+          {item.storeName.toUpperCase()}
+        </Text>
       </View>
     );
   };
@@ -93,27 +124,30 @@ export const HomeScreen = () => {
     return <View style={{ height: 0 }} />;
   };
   const navigation = useNavigation();
-  const mallrec = () => {
-    navigation.navigate("Cart");
-  };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={[
-          // styles.container,
-          // { backgroundColor: theme.backgroundColor },
-          { flex: 1 },
-        ]}
-      >
-        <SearchBar term={term} onTermChange={(term) => searchFilter(term)} />
-        <Button title="next" onPress={mallrec} />
+    <SafeAreaView style={{ flex: 1, marginTop: 50 }}>
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.mallImage}
+            source={require("../assets/mall.jpg")}
+          />
+          <Text style={[styles.imageText]}>Where do you want to go?</Text>
+          <View style={styles.searchContainer}>
+            <SearchBar
+              term={term}
+              onTermChange={(term) => searchFilter(term)}
+            />
+          </View>
+        </View>
         <Picker
           selectedValue={category}
           onValueChange={(itemValue) => sortCategory(itemValue)}
           mode="dropdown"
+          style={styles.picker}
         >
-          <Picker.Item label="All" value="All" />
+          <Picker.Item label="All Categories" value="All" />
           <Picker.Item
             label="Amusement/Entertainment"
             value="Amusement/Entertainment"
@@ -196,5 +230,45 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 10,
+  },
+  picker: {
+    backgroundColor: "#d9d9d9",
+    marginLeft: 20,
+    marginTop: 40,
+    // marginRight: 170,
+    width: "50%",
+    height: 30,
+    // borderRadius: 10,
+    marginBottom: 20,
+  },
+  container: {
+    paddingTop: 30,
+    flex: 1,
+  },
+  imageContainer: {
+    alignItems: "center",
+    position: "relative",
+    marginTop: 10,
+  },
+  mallImage: {
+    width: 400,
+    height: 250,
+    borderRadius: 10,
+  },
+  imageText: {
+    position: "absolute",
+    top: "60%",
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    zIndex: 1,
+  },
+  searchContainer: {
+    position: "absolute",
+    top: "80%",
+    width: "100%",
+    paddingHorizontal: 15,
+    zIndex: 2,
   },
 });
